@@ -20,12 +20,8 @@ namespace FatturazioneElettronicaPA
         /// <summary>
         /// versione 1.1 formato trasmissione della fatturazione elettronica
         /// </summary>
-        private const FormatoTrasmissioneType formatoTrasmissioneType = FormatoTrasmissioneType.SDI11;
+        private const FormatoTrasmissioneType formatoTrasmissioneType = FormatoTrasmissioneType.FPA12; //fattura a PA v1.2
 
-        /// <summary>
-        /// versione 1.1 schema fatturazione elettronica
-        /// </summary>
-        private const VersioneSchemaType versioneSchemaType = VersioneSchemaType.Item11;
 
         /// <summary>
         /// namespace utilizzato nell'xml
@@ -35,7 +31,7 @@ namespace FatturazioneElettronicaPA
         /// <summary>
         /// namespace utilizzato nell'xml
         /// </summary>
-        private const string pNamespace = "http://www.fatturapa.gov.it/sdi/fatturapa/v1.1";
+        private const string pNamespace = "http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2";  //fattura v1.2
 
         /// <summary>
         /// namespace utilizzato nell'xml
@@ -45,7 +41,7 @@ namespace FatturazioneElettronicaPA
         /// <summary>
         /// nome file per visualizzare l'anteprima della fattura elettronica
         /// </summary>
-        private const string fileNameStyle = "fatturapa_v1.1.xsl";
+        private const string fileNameStyle = "fatturapa_v1.2.xsl"; //fattura v1.2
 
         /// <summary>
         /// nome file dell'anteprima della fatturazione elettronica
@@ -61,7 +57,7 @@ namespace FatturazioneElettronicaPA
             bool preview = true;
 
             FatturaElettronicaType fatturaElettronica = new FatturaElettronicaType();
-            fatturaElettronica.versione = Program.versioneSchemaType;
+            fatturaElettronica.versione = Program.formatoTrasmissioneType;
 
             XmlSerializerNamespaces xmlSerializerNamespaces = new XmlSerializerNamespaces();
 

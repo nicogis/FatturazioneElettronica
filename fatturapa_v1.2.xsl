@@ -2,7 +2,7 @@
 <xsl:stylesheet 
 	version="1.1" 
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	xmlns:a="http://www.fatturapa.gov.it/sdi/fatturapa/v1.1">
+	xmlns:a="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2">
 	<xsl:output method="html" />
 
 	<xsl:template name="FormatDate">
@@ -185,6 +185,14 @@
 															E-mail del trasmittente:
 															<span>
 																<xsl:value-of select="ContattiTrasmittente/Email" />
+															</span>
+														</li>
+													</xsl:if>
+													<xsl:if test="PECDestinatario">
+														<li>
+															Destinatario PEC:
+															<span>
+																<xsl:value-of select="PECDestinatario" />
 															</span>
 														</li>
 													</xsl:if>
@@ -823,6 +831,110 @@
 													</xsl:for-each>
 												</ul>
 											</xsl:if>
+
+
+											<xsl:if test="a:FatturaElettronica/FatturaElettronicaHeader/CessionarioCommittente/StabileOrganizzazione">
+												<h4>Stabile organizzazione del cessionario / committente</h4>
+
+												<ul>
+													<xsl:for-each select="a:FatturaElettronica/FatturaElettronicaHeader/CessionarioCommittente/StabileOrganizzazione">
+														<xsl:if test="Indirizzo">
+															<li>
+																Indirizzo:
+																<span>
+																	<xsl:value-of select="Indirizzo" />
+																</span>
+															</li>
+														</xsl:if>
+														<xsl:if test="NumeroCivico">
+															<li>
+																Numero civico:
+																<span>
+																	<xsl:value-of select="NumeroCivico" />
+																</span>
+															</li>
+														</xsl:if>
+														<xsl:if test="CAP">
+															<li>
+																CAP:
+																<span>
+																	<xsl:value-of select="CAP" />
+																</span>
+															</li>
+														</xsl:if>
+														<xsl:if test="Comune">
+															<li>
+																Comune:
+																<span>
+																	<xsl:value-of select="Comune" />
+																</span>
+															</li>
+														</xsl:if>
+														<xsl:if test="Provincia">
+															<li>
+																Provincia:
+																<span>
+																	<xsl:value-of select="Provincia" />
+																</span>
+															</li>
+														</xsl:if>
+														<xsl:if test="Nazione">
+															<li>
+																Nazione:
+																<span>
+																	<xsl:value-of select="Nazione" />
+																</span>
+															</li>
+														</xsl:if>
+													</xsl:for-each>
+												</ul>
+											</xsl:if>
+											
+											<xsl:if test="a:FatturaElettronica/FatturaElettronicaHeader/CessionarioCommittente/RappresentanteFiscale">
+												<div id="rappresentante-fiscale">
+													<h4>Dati del rappresentante fiscale del cessionario / committente</h4>
+		
+													<ul>
+															<xsl:for-each select="a:FatturaElettronica/FatturaElettronicaHeader/CessionarioCommittente/RappresentanteFiscale">
+																<xsl:if test="IdFiscaleIVA">
+																	<li>
+																		Identificativo fiscale ai fini IVA:
+																		<span>
+																			<xsl:value-of select="IdFiscaleIVA/IdPaese" />
+																			<xsl:value-of select="IdFiscaleIVA/IdCodice" />
+																		</span>
+																	</li>
+																</xsl:if>
+																<xsl:if test="Denominazione">
+																	<li>
+																		Denominazione:
+																		<span>
+																			<xsl:value-of select="Denominazione" />
+																		</span>
+																	</li>
+																</xsl:if>
+																<xsl:if test="Nome">
+																	<li>
+																		Nome:
+																		<span>
+																			<xsl:value-of select="Nome" />
+																		</span>
+																	</li>
+																</xsl:if>
+																<xsl:if test="Cognome">
+																	<li>
+																		Cognome:
+																		<span>
+																			<xsl:value-of select="Cognome" />
+																		</span>
+																	</li>
+																</xsl:if>
+															</xsl:for-each>
+														</ul>
+												</div>
+											</xsl:if>
+											<!--FINE DATI RAPPRESENTANTE FISCALE-->
+											
 										</div>
 									</xsl:if>
 									<!--FINE DATI CESSIONARIO COMMITTENTE-->
@@ -1341,6 +1453,9 @@
 																				</xsl:when>
 																				<xsl:when test="$NT='N6'">
 																					(inversione contabile)
+																				</xsl:when>
+																				<xsl:when test="$NT='N7'">
+																					(IVA assolta in altro stato UE)
 																				</xsl:when>
 																				<xsl:when test="$NT=''">
 																				</xsl:when>
@@ -2102,7 +2217,7 @@
 											<!--FINE DATI TRASPORTO-->
 
 											<!--INIZIO FATTURA PRINCIPALE-->
-											<xsl:if test="DatiGenerali/FatturaPrincipale/NumeroFatturaPrincipale">
+											<xsl:if test="DatiGenerali/FatturaPrincipale">
 												<div id="fattura-principale">
 													<h3>Dati relativi alla fattura principale</h3>
 													<ul>
@@ -2135,7 +2250,7 @@
 									<!--FINE DATI GENERALI-->
 
 									<!--INIZIO DATI BENI E SERVIZI-->
-									<xsl:if test="DatiBeniServizi/DettaglioLinee">
+									<xsl:if test="DatiBeniServizi">
 										<div id="dati-dettaglio-linee">
 
 											<!--INIZIO DATI DI DETTAGLIO DELLE LINEE-->
@@ -2362,6 +2477,9 @@
 																		<xsl:when test="$NAT='N6'">
 																			(inversione contabile)
 																		</xsl:when>
+																		<xsl:when test="$NAT='N7'">
+																			(IVA assolta in altro stato UE)
+																		</xsl:when>
 																		<xsl:otherwise>
 																			<span>(!!! codice non previsto !!!)</span>
 																		</xsl:otherwise>
@@ -2467,6 +2585,9 @@
 																		</xsl:when>
 																		<xsl:when test="$NAT1='N6'">
 																			(inversione contabile)
+																		</xsl:when>
+																		<xsl:when test="$NAT1='N7'">
+																			(IVA assolta in altro stato UE)
 																		</xsl:when>
 																		<xsl:otherwise>
 																			<span>(!!! codice non previsto !!!)</span>
@@ -2699,6 +2820,9 @@
 																			</xsl:when>
 																			<xsl:when test="$MP='MP21'">
 																				(SEPA Direct Debit B2B)
+																			</xsl:when>
+																			<xsl:when test="$MP='MP22'">
+																				(Trattenuta su somme già riscosse)
 																			</xsl:when>
 																			<xsl:when test="$MP=''">
 																			</xsl:when>
