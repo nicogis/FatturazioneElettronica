@@ -5,10 +5,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6B52EDC9-2571-4E3A-9420-4A729391336E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FatturazioneElettronicaPA</RootNamespace>
-    <AssemblyName>FatturazioneElettronicaPA</AssemblyName>
+    <RootNamespace>FatturazioneElettronica</RootNamespace>
+    <AssemblyName>StudioAT.FatturazioneElettronica</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,17 +46,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UrlCombine.cs" />
     <Compile Include="EstensioniFile.cs" />
+    <Compile Include="FatturaElettronicaReferences.cs" />
+    <Compile Include="FatturaElettronicaType.cs" />
     <Compile Include="FatturaElettronica.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Readme.md" />
+    <EmbeddedResource Include="xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fatturapa_v1.2.xsl" />
+    <EmbeddedResource Include="fatturaordinaria_v1.2.1.xsl" />
+    <EmbeddedResource Include="fatturaPA_v1.2.1.xsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\References.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

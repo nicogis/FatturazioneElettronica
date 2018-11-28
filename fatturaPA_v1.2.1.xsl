@@ -322,7 +322,7 @@
 																		(contribuenti minimi)
 																	</xsl:when>
 																	<xsl:when test="$RF='RF03'">
-																		(nuove iniziative produttive)
+																		(nuove iniziative produttive) - Non più valido in quanto abrogato dalla legge di stabilità 2015																	
 																	</xsl:when>
 																	<xsl:when test="$RF='RF04'">
 																		(agricoltura e attività connesse e pesca)
@@ -1449,7 +1449,7 @@
 																					(esenti)
 																				</xsl:when>
 																				<xsl:when test="$NT='N5'">
-																					(regime del margine)
+																					(regime del margine / IVA non esposta in fattura)
 																				</xsl:when>
 																				<xsl:when test="$NT='N6'">
 																					(inversione contabile)
@@ -2472,7 +2472,7 @@
 																			(esente)
 																		</xsl:when>
 																		<xsl:when test="$NAT='N5'">
-																			(regime del margine)
+																			(regime del margine / IVA non esposta in fattura)
 																		</xsl:when>
 																		<xsl:when test="$NAT='N6'">
 																			(inversione contabile)
@@ -2581,7 +2581,7 @@
 																			(esenti)
 																		</xsl:when>
 																		<xsl:when test="$NAT1='N5'">
-																			(regime del margine)
+																			(regime del margine / IVA non esposta in fattura)
 																		</xsl:when>
 																		<xsl:when test="$NAT1='N6'">
 																			(inversione contabile)

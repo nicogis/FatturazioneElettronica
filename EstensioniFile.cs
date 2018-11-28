@@ -4,12 +4,12 @@
 // </copyright>
 // <author>Nicogis</author>
 //-----------------------------------------------------------------------
-namespace FatturazioneElettronicaPA
+namespace FatturazioneElettronica
 {
     /// <summary>
     /// estensioni file
     /// </summary>
-    internal enum EstensioniFile
+    public enum EstensioniFile
     {
         /// <summary>
         /// file firmato
@@ -19,6 +19,17 @@ namespace FatturazioneElettronicaPA
         /// <summary>
         /// file non firmato
         /// </summary>
-        xml
+        xml,
+
+        /// <summary>
+        /// file formato stile fattura
+        /// </summary>
+        xsl,
+
+        /// <summary>
+        /// file schema xml
+        /// </summary>
+        xsd
+
     }
 }

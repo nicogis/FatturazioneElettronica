@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 // Le informazioni generali relative a un assembly sono controllate dal seguente 
 // set di attributi. Modificare i valori di questi attributi per modificare le informazioni
 // associate a un assembly.
-[assembly: AssemblyTitle("Fatturazione Elettronica Pubblica Amministrazione")]
-[assembly: AssemblyDescription("Fatturazione Elettronica per la Pubblica Amministrazione")]
+[assembly: AssemblyTitle("Fatturazione Elettronica")]
+[assembly: AssemblyDescription("Fatturazione Elettronica")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
@@ -14,8 +14,8 @@ using System.Runtime.InteropServices;
 #endif
 
 [assembly: AssemblyCompany("Studio A&T s.r.l.")]
-[assembly: AssemblyProduct("Fatturazione Elettronica PA")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyProduct("Fatturazione Elettronica")]
+[assembly: AssemblyCopyright("Copyright ©  2018")]
 
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Se il progetto viene esposto a COM, il GUID seguente verrà utilizzato come ID della libreria dei tipi
-[assembly: Guid("6b52edc9-2571-4e3a-9420-4a729391336e")]
+[assembly: Guid("6b52edc9-2571-4e3a-9420-4a729391336b")]
 
 // Le informazioni sulla versione di un assembly sono costituite dai seguenti quattro valori:
 //
@@ -38,5 +38,5 @@ using System.Runtime.InteropServices;
 // È possibile specificare tutti i valori oppure impostare valori predefiniti per i numeri relativi alla revisione e alla build 
 // usando l'asterisco '*' come illustrato di seguito:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("1.2.1.0")]
+[assembly: AssemblyFileVersion("1.2.1.0")]
