@@ -1,15 +1,15 @@
 ﻿## Fatturazione elettronica verso la Pubblica Amministrazione e privati
 
 ### Descrizione
-La libreria è stato sviluppata in c# in base alla documentazione fornita al seguente link http://www.fatturapa.gov.it/export/fatturazione/it/normativa/f-2.htm
+La libreria è stata sviluppata in c# in base alla documentazione fornita al seguente link http://www.fatturapa.gov.it/export/fatturazione/it/normativa/f-2.htm
 
 La libreria è completa di tutti i type per creare una fattura completa v. 1.2.1 in base alle proprie esigenze
 
 Sono presenti due metodi:
 
-- TryValidateXML per validare la fattura
+- *TryValidateXML* per validare la fattura
 
-- CreateXML per generale il file XML
+- *CreateXML* per generale il file XML
 
 ### Requisiti
 
