@@ -54,6 +54,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
     <None Include="Readme.md" />
     <EmbeddedResource Include="xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
