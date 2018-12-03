@@ -11,6 +11,15 @@ Sono presenti due metodi:
 
 - *CreateXML* per generale il file XML
 
+- Classe *ProgressivoFile*
+```csharp
+            // codifica in base36 per 5 caratteri (range 1..60466176 (ProgressivoFile.GetNumeroProgressivo("ZZZZZ")))
+            ProgressivoFile progressivoFile = new ProgressivoFile(1);
+            if (progressivoFile.IsValid())
+            {
+                string nomeFile = $"IT01234567890_{progressivoFile.GetProgressivoFile()}";
+            }  
+```
 ### Requisiti
 
 E' richiesto il framework Microsoft .NET 4.5
@@ -225,6 +234,14 @@ public class Program
 
                 // crea XML fattura da visualizzare con lo stile
                 //fatturaElettronica.CreateXML(@"c:\temp\IT01234567890_FPA01.xml", true);
+            }
+
+            // generazione di numero univoco progressivo file
+            // codifica in base36 per 5 caratteri (range 1..60466176 (ProgressivoFile.GetNumeroProgressivo("ZZZZZ")))
+            ProgressivoFile progressivoFile = new ProgressivoFile(1);
+            if (progressivoFile.IsValid())
+            {
+                string nomeFile = $"IT01234567890_{progressivoFile.GetProgressivoFile()}";
             }
 
             Console.ReadKey();
