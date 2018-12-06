@@ -5,13 +5,13 @@ La libreria è stata sviluppata in c# in base alla documentazione fornita al seg
 
 La libreria è completa di tutti i type per creare una fattura completa v. 1.2.1 in base alle proprie esigenze
 
-Sono presenti due metodi:
+Sono presenti i seguenti metodi:
 
 - *TryValidateXML* per validare la fattura
 
 - *CreateXML* per generale il file XML
 
-- Classe *ProgressivoFile*
+- *GetProgressivoFile*
 ```csharp
             // codifica in base36 per 5 caratteri (range 1..60466176 (ProgressivoFile.GetNumeroProgressivo("ZZZZZ")))
             ProgressivoFile progressivoFile = new ProgressivoFile(1);
