@@ -66,6 +66,7 @@
     <EmbeddedResource Include="Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Settings.StyleCop" />
     <None Include="_config.yml" />
   </ItemGroup>
   <ItemGroup>

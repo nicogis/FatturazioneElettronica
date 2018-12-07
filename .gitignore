@@ -8,6 +8,9 @@
 *.sln.docstates
 *.sln
 
+# StyleCop
+*.StyleCop
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
