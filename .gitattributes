@@ -12,7 +12,10 @@
 ###############################################################################
 #*.cs     diff=csharp
 
-*.rb linguist-language=CSharp
+#*.rb linguist-language=CSharp
+
+* linguist-vendored
+*.cs linguist-vendored=false
 ###############################################################################
 # Set the merge driver for project and solution files
 #
