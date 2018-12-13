@@ -265,6 +265,11 @@ public class Program
     }
 }
 ```
+### Installazione
+```
+	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.2.1
+```
+dalla Console di Gestione Pacchetti di Visual Studio
 
 ### License
 

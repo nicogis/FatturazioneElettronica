@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.2.1</version>
+    <title>Fatturazione elettronica</title>
+    <authors>nicogis</authors>
+    <owners>Studio A&amp;T s.r.l.</owners>
+    <licenseUrl>https://github.com/nicogis/FatturazioneElettronica/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://nicogis.github.io/FatturazioneElettronica</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Libreria per la fatturazione elettronica</description>
+    <releaseNotes>Versione iniziale</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>FatturazioneElettronica FatturaElettronica nicogis</tags>
+  </metadata>
+</package>
