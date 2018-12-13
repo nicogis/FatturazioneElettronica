@@ -11,6 +11,8 @@ Sono presenti i seguenti metodi:
 
 - *CreateXML* per generale il file XML
 
+- *CreateInvoice* per generare l'oggetto fattura da file XML 
+
 - *GetProgressivoFile*
 ```csharp
             // codifica in base36 per 5 caratteri (range 1..60466176 (ProgressivoFile.GetNumeroProgressivo("ZZZZZ")))
@@ -22,7 +24,7 @@ Sono presenti i seguenti metodi:
 ```
 ### Requisiti
 
-E' richiesto il framework Microsoft .NET 4.5
+E' richiesto il framework Microsoft .NET 4.6.2
 
 ### Esempio di creazione fattura
 
@@ -233,8 +235,18 @@ public class Program
                 fatturaElettronica.CreateXML(@"c:\temp\IT01234567890_FPA01.xml");
 
                 // crea XML fattura da visualizzare con lo stile
-                //fatturaElettronica.CreateXML(@"c:\temp\IT01234567890_FPA01.xml", true);
+                fatturaElettronica.CreateXML(@"c:\temp\IT01234567890_FPA01v.xml", true);
+                System.Diagnostics.Process.Start(@"c:\temp\IT01234567890_FPA01v.xml");
             }
+            
+            // crea fattura da file XML
+            if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out FatturaElettronicaType fe))
+            {
+                string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
+                DateTime d = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Data;
+                Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
+            }
+
 
             // generazione di numero univoco progressivo file
             // codifica in base36 per 5 caratteri (range 1..60466176 (ProgressivoFile.GetNumeroProgressivo("ZZZZZ")))

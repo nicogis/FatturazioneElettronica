@@ -41,29 +41,39 @@ public static class FatturaElettronicaReferences
     public const string DsNamespace = "http://www.w3.org/2000/09/xmldsig#";
 
     /// <summary>
+    /// folder contenitori stili
+    /// </summary>
+    public const string FolderStili = "Stili";
+
+    /// <summary>
+    /// folder contenitore schemi
+    /// </summary>
+    public const string FolderSchemi = "Schemi";
+
+    /// <summary>
     /// xsd fatture
     /// </summary>
-    public static readonly string XsdFileFatturaVersione = $"Schema_del_file_xml_FatturaPA_versione_{FatturaElettronicaReferences.Versione}.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsd)}";
+    public static readonly string XsdFileFatturaVersione = $"{FatturaElettronicaReferences.FolderSchemi}.Schema_del_file_xml_FatturaPA_versione_{FatturaElettronicaReferences.Versione}.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsd)}";
 
     /// <summary>
     /// xsd per validare le fatture
     /// </summary>
-    public static readonly string XsdFileFatturaVersioneXSD = $"Schema_del_file_xml_FatturaPA_versione_{FatturaElettronicaReferences.VersioneXSD}.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsd)}";
+    public static readonly string XsdFileFatturaVersioneXSD = $"{FatturaElettronicaReferences.FolderSchemi}.Schema_del_file_xml_FatturaPA_versione_{FatturaElettronicaReferences.VersioneXSD}.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsd)}";
 
     /// <summary>
     /// Xmldsig_core_schema per validare le fatture
     /// </summary>
-    public static readonly string Xmldsig_core_schema = $"xmldsig-core-schema.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsd)}";
+    public static readonly string Xmldsig_core_schema = $"{FatturaElettronicaReferences.FolderSchemi}.xmldsig-core-schema.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsd)}";
 
     /// <summary>
     /// nome file per visualizzare l'anteprima della fattura elettronica PA
     /// </summary>
-    public static readonly string FileNameStylePA = $"fatturaPA_v{FatturaElettronicaReferences.VersioneXSD}.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsl)}";
+    public static readonly string FileNameStylePA = $"{FatturaElettronicaReferences.FolderStili}.fatturaPA_v{FatturaElettronicaReferences.VersioneXSD}.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsl)}";
 
     /// <summary>
     /// nome file per visualizzare l'anteprima della fattura elettronica
     /// </summary>
-    public static readonly string FileNameStyleOrdinaria = $"fatturaordinaria_v{FatturaElettronicaReferences.VersioneXSD}.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsl)}";
+    public static readonly string FileNameStyleOrdinaria = $"{FatturaElettronicaReferences.FolderStili}.fatturaordinaria_v{FatturaElettronicaReferences.VersioneXSD}.{Enum.GetName(typeof(EstensioniFile), EstensioniFile.xsl)}";
 
     /// <summary>
     /// url xsd fattura http

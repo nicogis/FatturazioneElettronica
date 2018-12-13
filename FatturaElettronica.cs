@@ -172,5 +172,50 @@ namespace FatturazioneElettronica
                 throw;
             }
         }
+
+        /// <summary>
+        /// crea oggetto fattura da file
+        /// </summary>
+        /// <param name="pathFileName">percorso e nome del file</param>
+        /// <param name="fatturaElettronicaType">oggetto fattura</param>
+        /// <returns>true se l'operazione è avvenuta con success altrimenti false. Se il metodo va in errore rigetta l'errore</returns>
+        /// <example>
+        ///    FatturaElettronicaType fatturaElettronicaType; 
+        ///    if (!FatturaElettronica.CreateInvoice("c:\temp\IT01234567890_FPA01.xml", out FatturaElettronicaType fatturaElettronicaType))
+        ///    {
+        ///        fatturaElettronicaType ....
+        ///    }
+        /// </example>
+        public static bool CreateInvoice(string pathFileName, out FatturaElettronicaType fatturaElettronicaType)
+        {
+            fatturaElettronicaType = null;
+            try
+            {
+                if (!File.Exists(pathFileName))
+                {
+                    throw new FileNotFoundException();
+                }
+
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(FatturaElettronicaType));
+                
+                using (XmlReader reader = XmlReader.Create(pathFileName))
+                {
+                    if (xmlSerializer.CanDeserialize(reader))
+                    {
+                        fatturaElettronicaType = (FatturaElettronicaType)xmlSerializer.Deserialize(reader);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
