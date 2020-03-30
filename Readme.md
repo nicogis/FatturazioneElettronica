@@ -1,9 +1,13 @@
 ﻿## Fatturazione elettronica verso la Pubblica Amministrazione e privati
 
 ### Descrizione
-La libreria è stata sviluppata in c# in base alla documentazione fornita al seguente link http://www.fatturapa.gov.it/export/fatturazione/it/normativa/f-2.htm
+La libreria è stata sviluppata in c# in base alla documentazione fornita al seguente link [Documentazione Fattura PA](http://www.fatturapa.gov.it/export/fatturazione/it/normativa/f-2.htm)
 
-La libreria è completa di tutti i type per creare una fattura completa v. 1.2.1 in base alle proprie esigenze
+La libreria è completa di tutti i type per creare una fattura completa con le specifiche [v. 1.3](https://www.fatturapa.gov.it/export/fatturazione/sdi/Specifiche_tecniche_del_formato_FatturaPA_V1.3.pdf)  in base alle proprie esigenze
+
+Possono essere create fatture con schema 1.0, 1.1, 1.2, 1.2.1
+
+La versione 1.2.1 può essere utilizzata dal 4 maggio 2020 mentre la 1.2 può essere utilizzata fino al 30 settembre 2020
 
 Sono presenti i seguenti metodi:
 
@@ -31,6 +35,10 @@ E' richiesto il framework Microsoft .NET 4.6.2
 ![References](images/References.PNG)
 
 ```csharp
+
+#define v121
+#define allegati
+
 //-----------------------------------------------------------------------
 // <copyright file="Program.cs" company="Studio A&T s.r.l.">
 //     Copyright (c) Studio A&T s.r.l. All rights reserved.
@@ -38,7 +46,16 @@ E' richiesto il framework Microsoft .NET 4.6.2
 // <author>Nicogis</author>
 //-----------------------------------------------------------------------
 
-using FatturazioneElettronica;
+#if v10
+using FatturazioneElettronica.Type.V_1_0;
+#elif v11
+using FatturazioneElettronica.Type.V_1_1;
+#elif v12
+using FatturazioneElettronica.Type.V_1_2;
+#elif v121
+using FatturazioneElettronica.Type.V_1_2_1;
+#endif
+
 using System;
 using System.Collections.Generic;
 
@@ -48,7 +65,14 @@ public class Program
     {
 
         FatturaElettronicaType fatturaElettronica = new FatturaElettronicaType();
-        fatturaElettronica.versione = FormatoTrasmissioneType.FPA12;
+
+#if v10
+        fatturaElettronica.versione = VersioneSchemaType.Item10;
+#elif v11
+        fatturaElettronica.versione = VersioneSchemaType.Item11;
+#elif v12 || v121
+        fatturaElettronica.versione = FormatoTrasmissioneType.FPR12;
+#endif
 
         FatturaElettronicaHeaderType fatturaElettronicaHeaderType = new FatturaElettronicaHeaderType();
 
@@ -60,7 +84,15 @@ public class Program
 
         datiTrasmissioneType.IdTrasmittente = idFiscaleTypeTrasmissione;
         datiTrasmissioneType.ProgressivoInvio = "00001";
-        datiTrasmissioneType.FormatoTrasmissione = FormatoTrasmissioneType.FPA12;
+
+#if v10
+        datiTrasmissioneType.FormatoTrasmissione = FormatoTrasmissioneType.SDI10;
+#elif v11
+        datiTrasmissioneType.FormatoTrasmissione = FormatoTrasmissioneType.SDI11;
+#elif v12 || v121
+        datiTrasmissioneType.FormatoTrasmissione = FormatoTrasmissioneType.FPR12;
+#endif
+
         datiTrasmissioneType.CodiceDestinatario = "AAAAAA";
 
         fatturaElettronicaHeaderType.DatiTrasmissione = datiTrasmissioneType;
@@ -84,8 +116,11 @@ public class Program
         datiAnagraficiCedenteType.Anagrafica = anagraficaType;
 
         cedentePrestatoreType.DatiAnagrafici = datiAnagraficiCedenteType;
-
+#if v10
+        datiAnagraficiCedenteType.RegimeFiscale = RegimeFiscaleType.RF18;
+#else
         datiAnagraficiCedenteType.RegimeFiscale = RegimeFiscaleType.RF19;
+#endif
 
         IndirizzoType indirizzoType = new IndirizzoType();
         indirizzoType.Indirizzo = "VIALE ROMA";
@@ -130,10 +165,15 @@ public class Program
         datiGeneraliDocumentoType.Divisa = "EUR";
         datiGeneraliDocumentoType.Data = new DateTime(2017,1,18);
         datiGeneraliDocumentoType.Numero = "123";
+
+#if v10
+        datiGeneraliDocumentoType.Causale = "LA FATTURA FA RIFERIMENTO AD UNA OPERAZIONE AAAA BBBBBBBBBBBBBBBBBB CCC DDDDDDDDDDDDDDD E FFFFFFFFFFFFFFFFFFFF GGGGGGGGGG HHHHHHH II LLLLLLLLLLLLLLLLL MMM NNNNN OO PPPPPPPPPPP QQQQ RRRR SSSSSSSSSSSSSS";
+#else       
         datiGeneraliDocumentoType.Causale = new string[] {
             "LA FATTURA FA RIFERIMENTO AD UNA OPERAZIONE AAAA BBBBBBBBBBBBBBBBBB CCC DDDDDDDDDDDDDDD E FFFFFFFFFFFFFFFFFFFF GGGGGGGGGG HHHHHHH II LLLLLLLLLLLLLLLLL MMM NNNNN OO PPPPPPPPPPP QQQQ RRRR SSSSSSSSSSSSSS",
             "SEGUE DESCRIZIONE CAUSALE NEL CASO IN CUI NON SIANO STATI SUFFICIENTI 200 CARATTERI AAAAAAAAAAA BBBBBBBBBBBBBBBBB"
         };
+#endif
 
         datiGeneraliType.DatiGeneraliDocumento = datiGeneraliDocumentoType;
 
@@ -218,6 +258,43 @@ public class Program
 
         fatturaElettronicaBodyType.DatiPagamento = new DatiPagamentoType[] { datiPagamentoType };
 
+#if allegati
+                
+        string filePathAttachment = @"c:\temp\scratch\prova.pdf";
+        if(File.Exists(filePathAttachment))
+        {
+            List<AllegatiType> allegatiTypes = new List<AllegatiType>();
+            AllegatiType allegatiType = new AllegatiType();
+            allegatiType.NomeAttachment = Path.ChangeExtension(Path.GetFileName(filePathAttachment), "zip");
+            allegatiType.AlgoritmoCompressione = "zip".ToUpperInvariant();
+            allegatiType.FormatoAttachment = Path.GetExtension(filePathAttachment).TrimStart('.').ToUpperInvariant();
+
+            byte[] fileBytes = File.ReadAllBytes(filePathAttachment);
+            byte[] compressedBytes = null;
+
+            //creo lo zip in memoria
+            using (var outStream = new MemoryStream())
+            {
+                using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, true))
+                {
+                    var fileInArchive = archive.CreateEntry(filePathAttachment, CompressionLevel.Optimal);
+                    using (var entryStream = fileInArchive.Open())
+                    using (var fileToCompressStream = new MemoryStream(fileBytes))
+                    {
+                        fileToCompressStream.CopyTo(entryStream);
+                    }
+                }
+
+                compressedBytes = outStream.ToArray();
+            }
+
+            allegatiType.Attachment = compressedBytes;
+            allegatiTypes.Add(allegatiType);
+
+            fatturaElettronicaBodyType.Allegati = allegatiTypes.ToArray();
+        }
+#endif
+
         fatturaElettronica.FatturaElettronicaBody = new FatturaElettronicaBodyType[] { fatturaElettronicaBodyType };
 
         try
@@ -234,19 +311,30 @@ public class Program
                 // crea XML fattura
                 fatturaElettronica.CreateXML(@"c:\temp\IT01234567890_FPA01.xml");
 
-                // crea XML fattura da visualizzare con lo stile
-                fatturaElettronica.CreateXML(@"c:\temp\IT01234567890_FPA01v.xml", true);
-                System.Diagnostics.Process.Start(@"c:\temp\IT01234567890_FPA01v.xml");
+                // crea XML fattura temporanea per visualizzarla con lo stile
+                fatturaElettronica.CreateXML(@"c:\temp\preview.xml", true);
+                System.Diagnostics.Process.Start(@"c:\temp\preview.xml");
             }
             
             // crea fattura da file XML
-            if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out FatturaElettronicaType fe))
+            // n.b. La versione dello schema viene automaticamente rilevata dal file. 
+            // Se la versione è ambigua viene utilizzata la versione più recente dello schema
+            // Per forzare una versione ambigua utilizzare il parametro forceVersion; è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
+#if v12
+            if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fe, Versioni.Versione1_2))
             {
                 string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
                 DateTime d = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Data;
                 Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
             }
-
+#else
+            if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fe))
+            {
+                string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
+                DateTime d = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Data;
+                Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
+            }
+#endif
 
             // generazione di numero univoco progressivo file
             // codifica in base36 per 5 caratteri (range 1..60466176 (ProgressivoFile.GetNumeroProgressivo("ZZZZZ")))
@@ -266,8 +354,11 @@ public class Program
 }
 ```
 ### Installazione
+
+Versione 1.3 si riferisce alle specifiche tecniche del formato della fatturaPA
+
 ```
-	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.2.1
+	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.0
 ```
 dalla Console di Gestione Pacchetti di Visual Studio
 

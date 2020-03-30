@@ -20,7 +20,7 @@ namespace FatturazioneElettronica
     /// </summary>
     public class ProgressivoFile
     {      
-        private static char[] charset36 = null;
+        private static char[] charset36;
 
         static ProgressivoFile()
         {

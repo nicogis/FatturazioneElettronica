@@ -1,8 +1,8 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <xsl:stylesheet 
-	version="1.1" 
+	version="1.0" 
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	xmlns:a="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2">
+	xmlns:a="http://www.fatturapa.gov.it/sdi/fatturapa/v1.0">
 	<xsl:output method="html" />
 
 	<xsl:template name="FormatDate">
@@ -166,7 +166,7 @@
 													</xsl:if>
 													<xsl:if test="CodiceDestinatario">
 														<li>
-															Codice identificativo destinatario:
+															Codice Amministrazione destinataria:
 															<span>
 																<xsl:value-of select="CodiceDestinatario" />
 															</span>
@@ -185,14 +185,6 @@
 															E-mail del trasmittente:
 															<span>
 																<xsl:value-of select="ContattiTrasmittente/Email" />
-															</span>
-														</li>
-													</xsl:if>
-													<xsl:if test="PECDestinatario">
-														<li>
-															Destinatario PEC:
-															<span>
-																<xsl:value-of select="PECDestinatario" />
 															</span>
 														</li>
 													</xsl:if>
@@ -322,7 +314,7 @@
 																		(contribuenti minimi)
 																	</xsl:when>
 																	<xsl:when test="$RF='RF03'">
-																		(nuove iniziative produttive) - Non più valido in quanto abrogato dalla legge di stabilità 2015																	
+																		(nuove iniziative produttive)
 																	</xsl:when>
 																	<xsl:when test="$RF='RF04'">
 																		(agricoltura e attività connesse e pesca)
@@ -366,10 +358,8 @@
 																		(IVA per cassa P.A.)
 																	</xsl:when>
 																	<xsl:when test="$RF='RF17'">
-																		(IVA per cassa - art. 32-bis, D.L. 83/2012)
-																	</xsl:when>
-																	<xsl:when test="$RF='RF19'">
-																		(Regime forfettario)
+																		(IVA per cassa soggetti con vol. d’affari inferiore ad
+																		euro 200.000)
 																	</xsl:when>
 																	<xsl:when test="$RF='RF18'">
 																		(altro)
@@ -831,110 +821,6 @@
 													</xsl:for-each>
 												</ul>
 											</xsl:if>
-
-
-											<xsl:if test="a:FatturaElettronica/FatturaElettronicaHeader/CessionarioCommittente/StabileOrganizzazione">
-												<h4>Stabile organizzazione del cessionario / committente</h4>
-
-												<ul>
-													<xsl:for-each select="a:FatturaElettronica/FatturaElettronicaHeader/CessionarioCommittente/StabileOrganizzazione">
-														<xsl:if test="Indirizzo">
-															<li>
-																Indirizzo:
-																<span>
-																	<xsl:value-of select="Indirizzo" />
-																</span>
-															</li>
-														</xsl:if>
-														<xsl:if test="NumeroCivico">
-															<li>
-																Numero civico:
-																<span>
-																	<xsl:value-of select="NumeroCivico" />
-																</span>
-															</li>
-														</xsl:if>
-														<xsl:if test="CAP">
-															<li>
-																CAP:
-																<span>
-																	<xsl:value-of select="CAP" />
-																</span>
-															</li>
-														</xsl:if>
-														<xsl:if test="Comune">
-															<li>
-																Comune:
-																<span>
-																	<xsl:value-of select="Comune" />
-																</span>
-															</li>
-														</xsl:if>
-														<xsl:if test="Provincia">
-															<li>
-																Provincia:
-																<span>
-																	<xsl:value-of select="Provincia" />
-																</span>
-															</li>
-														</xsl:if>
-														<xsl:if test="Nazione">
-															<li>
-																Nazione:
-																<span>
-																	<xsl:value-of select="Nazione" />
-																</span>
-															</li>
-														</xsl:if>
-													</xsl:for-each>
-												</ul>
-											</xsl:if>
-											
-											<xsl:if test="a:FatturaElettronica/FatturaElettronicaHeader/CessionarioCommittente/RappresentanteFiscale">
-												<div id="rappresentante-fiscale">
-													<h4>Dati del rappresentante fiscale del cessionario / committente</h4>
-		
-													<ul>
-															<xsl:for-each select="a:FatturaElettronica/FatturaElettronicaHeader/CessionarioCommittente/RappresentanteFiscale">
-																<xsl:if test="IdFiscaleIVA">
-																	<li>
-																		Identificativo fiscale ai fini IVA:
-																		<span>
-																			<xsl:value-of select="IdFiscaleIVA/IdPaese" />
-																			<xsl:value-of select="IdFiscaleIVA/IdCodice" />
-																		</span>
-																	</li>
-																</xsl:if>
-																<xsl:if test="Denominazione">
-																	<li>
-																		Denominazione:
-																		<span>
-																			<xsl:value-of select="Denominazione" />
-																		</span>
-																	</li>
-																</xsl:if>
-																<xsl:if test="Nome">
-																	<li>
-																		Nome:
-																		<span>
-																			<xsl:value-of select="Nome" />
-																		</span>
-																	</li>
-																</xsl:if>
-																<xsl:if test="Cognome">
-																	<li>
-																		Cognome:
-																		<span>
-																			<xsl:value-of select="Cognome" />
-																		</span>
-																	</li>
-																</xsl:if>
-															</xsl:for-each>
-														</ul>
-												</div>
-											</xsl:if>
-											<!--FINE DATI RAPPRESENTANTE FISCALE-->
-											
 										</div>
 									</xsl:if>
 									<!--FINE DATI CESSIONARIO COMMITTENTE-->
@@ -1113,51 +999,6 @@
 																	<xsl:when test="$TD='TD06'">
 																		(parcella)
 																	</xsl:when>
-																	<xsl:when test="$TD='TD16'">
-																		(integrazione fattura 
-																		reverse charge interno)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD17'">
-																		(integrazione/autofattura per 
-																		acquisto servizi da estero)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD18'">
-																		(integrazione per acquisto 
-																		beni intracomunitari)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD19'">
-																		(integrazione/autofattura per 
-																		acquisto beni ex art.17 c.2 DPR 633/72)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD20'">
-																		(autofattura per regolarizzazione e 
-																		integrazione delle fatture - 
-																		art.6 c.8 d.lgs.471/97 o art.46 c.5 D.L.331/93)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD21'">
-																		(autofattura per splafonamento)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD22'">
-																		(estrazione beni da Deposito IVA)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD23'">
-																		(estrazione beni da Deposito IVA 
-																		con versamento IVA)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD24'">
-																		(fattura differita - art.21 c.4 lett. a)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD25'">
-																		(fattura differita - art.21 c.4 terzo periodo lett. b)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD26'">
-																		(cessione di beni ammortizzabili e per 
-																		passaggi interni - art.36 DPR 633/72)
-																	</xsl:when>
-																	<xsl:when test="$TD='TD27'">
-																		(fattura per autoconsumo o per cessioni 
-																		gratuite senza rivalsa)
-																	</xsl:when>
 																	<xsl:when test="$TD=''">
 																	</xsl:when>
 																	<xsl:otherwise>
@@ -1209,16 +1050,14 @@
 																</span>
 															</li>
 														</xsl:if>
-														<xsl:for-each select="DatiGenerali/DatiGeneraliDocumento/Causale">
-															
+														<xsl:if test="DatiGenerali/DatiGeneraliDocumento/Causale">
 															<li>
 																Causale:
 																<span>
-																	<xsl:value-of select="current()" />
+																	<xsl:value-of select="DatiGenerali/DatiGeneraliDocumento/Causale" />
 																</span>
 															</li>
-															
-														</xsl:for-each>
+														</xsl:if>
 														<xsl:if test="DatiGenerali/DatiGeneraliDocumento/Art73">
 															<li>
 																Art. 73 DPR 633/72:
@@ -1250,18 +1089,6 @@
 																				</xsl:when>
 																				<xsl:when test="$TR='RT02'">
 																					(ritenuta persone giuridiche)
-																				</xsl:when>
-																				<xsl:when test="$TR='RT03'">
-																					(contributo INPS)
-																				</xsl:when>
-																				<xsl:when test="$TR='RT04'">
-																					(contributo ENASARCO)
-																				</xsl:when>
-																				<xsl:when test="$TR='RT05'">
-																					(contributo ENPAM)
-																				</xsl:when>
-																				<xsl:when test="$TR='RT06'">
-																					(altro contributo previdenziale)
 																				</xsl:when>
 																				<xsl:when test="$TR=''">
 																				</xsl:when>
@@ -1297,7 +1124,7 @@
 																				<xsl:value-of select="CausalePagamento" />
 																			</xsl:variable>
 																			<xsl:if test="$CP!=''">
-																				(decodifica come da modello CU)
+																				(decodifica come da modello 770S)
 																			</xsl:if>
 																		</li>
 																	</xsl:if>
@@ -1313,11 +1140,11 @@
 															<xsl:for-each select="DatiGenerali/DatiGeneraliDocumento/DatiBollo">
 																<h4>Bollo</h4>
 																<ul>
-																	<xsl:if test="BolloVirtuale">
+																	<xsl:if test="NumeroBollo">
 																		<li>
-																			Bollo virtuale:
+																			Numero bollo:
 																			<span>
-																				<xsl:value-of select="BolloVirtuale" />
+																				<xsl:value-of select="NumeroBollo" />
 																			</span>
 																		</li>
 																	</xsl:if>
@@ -1499,89 +1326,14 @@
 																				<xsl:when test="$NT='N2'">
 																					(non soggette)
 																				</xsl:when>
-																				<xsl:when test="$NT='N2.1'">
-																					(non soggette ad IVA - artt. da 7 a 7-septies 
-																					del DPR 633/72)
-																				</xsl:when>
-																				<xsl:when test="$NT='N2.2'">
-																					(non soggette - altri casi)
-																				</xsl:when>
 																				<xsl:when test="$NT='N3'">
 																					(non imponibili)
-																				</xsl:when>
-																				<xsl:when test="$NT='N3.1'">
-																					(non imponibili - esportazioni)
-																				</xsl:when>
-																				<xsl:when test="$NT='N3.2'">
-																					(non imponibili - cessioni intracomunitarie)
-																				</xsl:when>
-																				<xsl:when test="$NT='N3.3'">
-																					(non imponibili - cessioni verso S.Marino)
-																				</xsl:when>
-																				<xsl:when test="$NT='N3.4'">
-																					(non imponibili - operazioni assimilate alle 
-																					cessioni all'esportazione)
-																				</xsl:when>
-																				<xsl:when test="$NT='N3.5'">
-																					(non imponibili - a seguito di dichiarazioni 
-																					d'intento)
-																				</xsl:when>
-																				<xsl:when test="$NT='N3.6'">
-																					(non imponibili - altre operazioni che non 
-																					concorrono alla formazione del plafond)
 																				</xsl:when>
 																				<xsl:when test="$NT='N4'">
 																					(esenti)
 																				</xsl:when>
 																				<xsl:when test="$NT='N5'">
-																					(regime del margine / IVA non esposta in fattura)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6'">
-																					(inversione contabile per le operazioni in reverse 
-																					charge ovvero nei casi di autofatturazione per 
-																					acquisti extra UE di servizi ovvero per importazioni 
-																					di beni nei soli casi previsti)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6.1'">
-																					(inversione contabile - cessione di rottami e 
-																					altri materiali di recupero)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6.2'">
-																					(inversione contabile - cessione di oro e 
-																					argento puro)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6.3'">
-																					(inversione contabile - subappalto nel settore 
-																					edile)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6.4'">
-																					(inversione contabile - cessione di fabbricati)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6.5'">
-																					(inversione contabile - cessione di telefoni 
-																					cellulari)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6.6'">
-																					(inversione contabile - cessione di prodotti 
-																					elettronici)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6.7'">
-																					(inversione contabile - prestazioni comparto 
-																					edile e settori connessi)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6.8'">
-																					(inversione contabile - operazioni settore 
-																					energetico)
-																				</xsl:when>
-																				<xsl:when test="$NT='N6.9'">
-																					(inversione contabile - altri casi)
-																				</xsl:when>
-																				<xsl:when test="$NT='N7'">
-																					(IVA assolta in altro stato UE - vendite a distanza 
-																					ex art.40 c.3 e 4 e art.41 c.1 lett. b DL 331/93; 
-																					prestazione di servizi di telecomunicazioni, 
-																					tele-radiodiffusione ed elettronici ex art.7-sexies 
-																					lett. f, g, e art.74-sexies DPR 633/72)
+																					(regime del margine)
 																				</xsl:when>
 																				<xsl:when test="$NT=''">
 																				</xsl:when>
@@ -2342,8 +2094,24 @@
 											</xsl:if>
 											<!--FINE DATI TRASPORTO-->
 
+											<!--INIZIO NORMA RIFERIMENTO-->
+											<xsl:if test="DatiGenerali/NormaDiRiferimento">
+												<div id="norma-riferimento">
+													<h3>Reverse charge</h3>
+													<ul>
+														<li>
+															Riferimento normativo:
+															<span>
+																<xsl:value-of select="DatiGenerali/NormaDiRiferimento" />
+															</span>
+														</li>
+													</ul>
+												</div>
+											</xsl:if>
+											<!--FINE NORMA RIFERIMENTO-->
+
 											<!--INIZIO FATTURA PRINCIPALE-->
-											<xsl:if test="DatiGenerali/FatturaPrincipale">
+											<xsl:if test="DatiGenerali/FatturaPrincipale/NumeroFatturaPrincipale">
 												<div id="fattura-principale">
 													<h3>Dati relativi alla fattura principale</h3>
 													<ul>
@@ -2376,7 +2144,7 @@
 									<!--FINE DATI GENERALI-->
 
 									<!--INIZIO DATI BENI E SERVIZI-->
-									<xsl:if test="DatiBeniServizi">
+									<xsl:if test="DatiBeniServizi/DettaglioLinee">
 										<div id="dati-dettaglio-linee">
 
 											<!--INIZIO DATI DI DETTAGLIO DELLE LINEE-->
@@ -2591,89 +2359,14 @@
 																		<xsl:when test="$NAT='N2'">
 																			(non soggetta)
 																		</xsl:when>
-																		<xsl:when test="$NAT='N2.1'">
-																			(non soggette ad IVA - artt. da 7 a 7-septies 
-																			del DPR 633/72)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N2.2'">
-																			(non soggette - altri casi)
-																		</xsl:when>
 																		<xsl:when test="$NAT='N3'">
-																			(non imponibili)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N3.1'">
-																			(non imponibili - esportazioni)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N3.2'">
-																			(non imponibili - cessioni intracomunitarie)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N3.3'">
-																			(non imponibili - cessioni verso S.Marino)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N3.4'">
-																			(non imponibili - operazioni assimilate alle 
-																			cessioni all'esportazione)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N3.5'">
-																			(non imponibili - a seguito di dichiarazioni 
-																			d'intento)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N3.6'">
-																			(non imponibili - altre operazioni che non 
-																			concorrono alla formazione del plafond)
+																			(non imponibile)
 																		</xsl:when>
 																		<xsl:when test="$NAT='N4'">
-																			(esenti)
+																			(esente)
 																		</xsl:when>
 																		<xsl:when test="$NAT='N5'">
-																			(regime del margine / IVA non esposta in fattura)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6'">
-																			(inversione contabile per le operazioni in reverse 
-																			charge ovvero nei casi di autofatturazione per 
-																			acquisti extra UE di servizi ovvero per importazioni 
-																			di beni nei soli casi previsti)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6.1'">
-																			(inversione contabile - cessione di rottami e 
-																			altri materiali di recupero)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6.2'">
-																			(inversione contabile - cessione di oro e 
-																			argento puro)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6.3'">
-																			(inversione contabile - subappalto nel settore 
-																			edile)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6.4'">
-																			(inversione contabile - cessione di fabbricati)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6.5'">
-																			(inversione contabile - cessione di telefoni 
-																			cellulari)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6.6'">
-																			(inversione contabile - cessione di prodotti 
-																			elettronici)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6.7'">
-																			(inversione contabile - prestazioni comparto 
-																			edile e settori connessi)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6.8'">
-																			(inversione contabile - operazioni settore 
-																			energetico)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N6.9'">
-																			(inversione contabile - altri casi)
-																		</xsl:when>
-																		<xsl:when test="$NAT='N7'">
-																			(IVA assolta in altro stato UE - vendite a distanza 
-																			ex art.40 c.3 e 4 e art.41 c.1 lett. b DL 331/93; 
-																			prestazione di servizi di telecomunicazioni, 
-																			tele-radiodiffusione ed elettronici ex art.7-sexies 
-																			lett. f, g, e art.74-sexies DPR 633/72)
+																			(regime del margine)
 																		</xsl:when>
 																		<xsl:otherwise>
 																			<span>(!!! codice non previsto !!!)</span>
@@ -2769,89 +2462,14 @@
 																		<xsl:when test="$NAT1='N2'">
 																			(non soggette)
 																		</xsl:when>
-																		<xsl:when test="$NAT1='N2.1'">
-																			(non soggette ad IVA - artt. da 7 a 7-septies 
-																			del DPR 633/72)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N2.2'">
-																			(non soggette - altri casi)
-																		</xsl:when>
 																		<xsl:when test="$NAT1='N3'">
 																			(non imponibili)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N3.1'">
-																			(non imponibili - esportazioni)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N3.2'">
-																			(non imponibili - cessioni intracomunitarie)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N3.3'">
-																			(non imponibili - cessioni verso S.Marino)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N3.4'">
-																			(non imponibili - operazioni assimilate alle 
-																			cessioni all'esportazione)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N3.5'">
-																			(non imponibili - a seguito di dichiarazioni 
-																			d'intento)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N3.6'">
-																			(non imponibili - altre operazioni che non 
-																			concorrono alla formazione del plafond)
 																		</xsl:when>
 																		<xsl:when test="$NAT1='N4'">
 																			(esenti)
 																		</xsl:when>
 																		<xsl:when test="$NAT1='N5'">
-																			(regime del margine / IVA non esposta in fattura)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6'">
-																			(inversione contabile per le operazioni in reverse 
-																			charge ovvero nei casi di autofatturazione per 
-																			acquisti extra UE di servizi ovvero per importazioni 
-																			di beni nei soli casi previsti)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6.1'">
-																			(inversione contabile - cessione di rottami e 
-																			altri materiali di recupero)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6.2'">
-																			(inversione contabile - cessione di oro e 
-																			argento puro)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6.3'">
-																			(inversione contabile - subappalto nel settore 
-																			edile)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6.4'">
-																			(inversione contabile - cessione di fabbricati)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6.5'">
-																			(inversione contabile - cessione di telefoni 
-																			cellulari)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6.6'">
-																			(inversione contabile - cessione di prodotti 
-																			elettronici)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6.7'">
-																			(inversione contabile - prestazioni comparto 
-																			edile e settori connessi)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6.8'">
-																			(inversione contabile - operazioni settore 
-																			energetico)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N6.9'">
-																			(inversione contabile - altri casi)
-																		</xsl:when>
-																		<xsl:when test="$NAT1='N7'">
-																			(IVA assolta in altro stato UE - vendite a distanza 
-																			ex art.40 c.3 e 4 e art.41 c.1 lett. b DL 331/93; 
-																			prestazione di servizi di telecomunicazioni, 
-																			tele-radiodiffusione ed elettronici ex art.7-sexies 
-																			lett. f, g, e art.74-sexies DPR 633/72)
+																			(regime del margine)
 																		</xsl:when>
 																		<xsl:otherwise>
 																			<span>(!!! codice non previsto !!!)</span>
@@ -2906,9 +2524,6 @@
 																		</xsl:when>
 																		<xsl:when test="$EI='D'">
 																			(esigibilità differita)
-																		</xsl:when>
-																		<xsl:when test="$EI='S'">
-																			(scissione dei pagamenti)
 																		</xsl:when>
 																		<xsl:otherwise>
 																			<span>(!!! codice non previsto !!!)</span>
@@ -3044,7 +2659,7 @@
 																				(bollettino bancario)
 																			</xsl:when>
 																			<xsl:when test="$MP='MP08'">
-																				(carta di pagamento)
+																				(carta di credito)
 																			</xsl:when>
 																			<xsl:when test="$MP='MP09'">
 																				(RID)
@@ -3072,24 +2687,6 @@
 																			</xsl:when>
 																			<xsl:when test="$MP='MP17'">
 																				(domiciliazione postale)
-																			</xsl:when>
-																			<xsl:when test="$MP='MP18'">
-																				(bollettino di c/c postale)
-																			</xsl:when>
-																			<xsl:when test="$MP='MP19'">
-																				(SEPA Direct Debit)
-																			</xsl:when>
-																			<xsl:when test="$MP='MP20'">
-																				(SEPA Direct Debit CORE)
-																			</xsl:when>
-																			<xsl:when test="$MP='MP21'">
-																				(SEPA Direct Debit B2B)
-																			</xsl:when>
-																			<xsl:when test="$MP='MP22'">
-																				(Trattenuta su somme già riscosse)
-																			</xsl:when>
-																			<xsl:when test="$MP='MP23'">
-																				(PagoPA)
 																			</xsl:when>
 																			<xsl:when test="$MP=''">
 																			</xsl:when>

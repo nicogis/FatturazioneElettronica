@@ -4,6 +4,8 @@
 // </copyright>
 // <author>Nicogis</author>
 //-----------------------------------------------------------------------
+using System;
+
 namespace FatturazioneElettronica
 {
     using System.Collections.Generic;
@@ -19,19 +21,6 @@ namespace FatturazioneElettronica
     /// </summary>
     public static class FatturaElettronica
     {
-        /// <summary>
-        /// crea il file XML della fattura senza style
-        /// </summary>
-        /// <param name="fatturaElettronicaType">oggetto fattura</param>
-        /// <param name="pathFileName">percorso e nome file di output</param>
-        /// <returns>true se la creazione è andata a buon termine altrimenti rigetta l'errore</returns>
-        /// <example>
-        ///    fatturaElettronicaType.CreateXML("c:\temp\IT01234567890_FPA01.xml");
-        /// </example>
-        public static bool CreateXML(this FatturaElettronicaType fatturaElettronicaType, string pathFileName)
-        {
-            return FatturaElettronica.CreateXML(fatturaElettronicaType, pathFileName, false);
-        }
 
         /// <summary>
         /// crea il file XML della fattura
@@ -41,33 +30,28 @@ namespace FatturazioneElettronica
         /// <param name="useStyle">usa lo style per visualizzare la fattura</param>
         /// <returns>true se la creazione è andata a buon termine altrimenti rigetta l'errore</returns>
         /// <example>
-        ///    fatturaElettronicaType.CreateXML("c:\temp\IT01234567890_FPA01.xml", false);
+        ///    fatturaElettronicaType.CreateXML("c:\temp\IT01234567890_FPA01.xml");
+        ///    
+        ///    // generazione file per la visualizzazione con stile 
+        ///    fatturaElettronicaType.CreateXML("c:\temp\preview.xml", true);
         /// </example>
-        public static bool CreateXML(this FatturaElettronicaType fatturaElettronicaType, string pathFileName, bool useStyle)
+        public static bool CreateXML(this IFatturaElettronicaType fatturaElettronicaType, string pathFileName, bool useStyle = false)
         {
             try
             {
                 XmlSerializerNamespaces xmlSerializerNamespaces = new XmlSerializerNamespaces();
 
-                xmlSerializerNamespaces.Add("xsi", FatturaElettronicaReferences.XsiNamespace);
-                xmlSerializerNamespaces.Add("p", FatturaElettronicaReferences.PNamespace);
-                xmlSerializerNamespaces.Add("ds", FatturaElettronicaReferences.DsNamespace);
+                xmlSerializerNamespaces.Add(FatturaElettronicaReferences.prefixSchema, FatturaElettronicaReferences.XsiNamespace);
+                xmlSerializerNamespaces.Add(FatturaElettronicaReferences.prefixNamespace, fatturaElettronicaType.Namespace);
+                xmlSerializerNamespaces.Add(FatturaElettronicaReferences.prefixDigitalSignatures, fatturaElettronicaType.DsNamespace);
 
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(FatturaElettronicaType));
+                XmlSerializer xmlSerializer = new XmlSerializer(fatturaElettronicaType.GetType());
 
                 using (TextWriter textWriter = new StreamWriter(pathFileName))
                 {
                     if (useStyle)
                     {
-                        string styleFile = null;
-                        if (fatturaElettronicaType.versione == FormatoTrasmissioneType.FPA12)
-                        {
-                            styleFile = FatturaElettronicaReferences.FileNameStylePA;
-                        }
-                        else if (fatturaElettronicaType.versione == FormatoTrasmissioneType.FPR12)
-                        {
-                            styleFile = FatturaElettronicaReferences.FileNameStyleOrdinaria;
-                        }
+                        string styleFile = fatturaElettronicaType.FileStyle;
 
                         string pathFileStyle = Path.Combine(Path.GetDirectoryName(pathFileName), styleFile);
                         if (!File.Exists(pathFileStyle))
@@ -75,7 +59,7 @@ namespace FatturazioneElettronica
                             using (FileStream f = File.Create(pathFileStyle))
                             {
                                 Assembly.GetExecutingAssembly().GetManifestResourceStream($"{typeof(FatturaElettronica).Namespace}.{styleFile}").CopyTo(f);
-                            }   
+                            }
                         }
 
                         using (XmlTextWriter xmlWriter = new XmlTextWriter(textWriter))
@@ -102,17 +86,16 @@ namespace FatturazioneElettronica
         /// <summary>
         /// Valida il file XML
         /// </summary>
-        /// <param name="pathFileNameXML">percorso e nome file XML da validare</param>
         /// <param name="messages">lista degli errori riscontrati nella validazione dell'XML</param>
         /// <returns>true se il file XML è formalmente corretto altrimenti false. Se il metodo va in errore rigetta l'errore</returns>
         /// <example>
         ///    List<string> errors;
-        ///    if (!FatturaElettronica.TryValidateXML("c:\temp\IT01234567890_FPA01.xml", out List<string> errors))
+        ///    if (!fatturaElettronicaType.TryValidateXML(out List<string> errors))
         ///    {
         ///        ...
         ///    }
         /// </example>
-        public static bool TryValidateXML(this FatturaElettronicaType fatturaElettronicaType, out List<string> messages)
+        public static bool TryValidateXML(this IFatturaElettronicaType fatturaElettronicaType, out List<string> messages)
         {
             var settings = new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore };
             messages = null;
@@ -121,11 +104,12 @@ namespace FatturazioneElettronica
 
                 XmlSerializerNamespaces xmlSerializerNamespaces = new XmlSerializerNamespaces();
 
-                xmlSerializerNamespaces.Add("xsi", FatturaElettronicaReferences.XsiNamespace);
-                xmlSerializerNamespaces.Add("p", FatturaElettronicaReferences.PNamespace);
-                xmlSerializerNamespaces.Add("ds", FatturaElettronicaReferences.DsNamespace);
+                xmlSerializerNamespaces.Add(FatturaElettronicaReferences.prefixSchema, FatturaElettronicaReferences.XsiNamespace);
+                xmlSerializerNamespaces.Add(FatturaElettronicaReferences.prefixNamespace, fatturaElettronicaType.Namespace);
+                xmlSerializerNamespaces.Add(FatturaElettronicaReferences.prefixDigitalSignatures, fatturaElettronicaType.DsNamespace);
 
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(FatturaElettronicaType));
+
+                XmlSerializer xmlSerializer = new XmlSerializer(fatturaElettronicaType.GetType());
                 using (MemoryStream stream = new MemoryStream())
                 {
                     xmlSerializer.Serialize(XmlWriter.Create(stream), fatturaElettronicaType, xmlSerializerNamespaces);
@@ -136,7 +120,7 @@ namespace FatturazioneElettronica
                         XDocument xdoc = XDocument.Load(xr);
                         var schemas = new XmlSchemaSet();
                         Assembly assembly = Assembly.GetExecutingAssembly();
-                        schemas.Add(FatturaElettronicaReferences.PNamespace, XmlReader.Create(assembly.GetManifestResourceStream($"{typeof(FatturaElettronica).Namespace}.{FatturaElettronicaReferences.XsdFileFatturaVersioneXSD}")) );
+                        schemas.Add(fatturaElettronicaType.Namespace, XmlReader.Create(assembly.GetManifestResourceStream($"{typeof(FatturaElettronica).Namespace}.{fatturaElettronicaType.XsdFileFatturaVersioneXsd}")));
 
                         StreamReader xmldsig = new StreamReader(assembly.GetManifestResourceStream($"{typeof(FatturaElettronica).Namespace}.{FatturaElettronicaReferences.Xmldsig_core_schema}"));
 
@@ -145,7 +129,7 @@ namespace FatturazioneElettronica
                             DtdProcessing = DtdProcessing.Ignore
                         }))
                         {
-                            schemas.Add(FatturaElettronicaReferences.DsNamespace, reader);
+                            schemas.Add(fatturaElettronicaType.DsNamespace, reader);
                         }
 
                         List<string> errors = new List<string>();
@@ -174,19 +158,24 @@ namespace FatturazioneElettronica
         }
 
         /// <summary>
-        /// crea oggetto fattura da file
+        /// Crea oggetto fattura da file
+        /// La versione dello schema viene automaticamente rilevata dal file. 
+        /// Se la versione è ambigua viene utilizzata la versione più recente dello schema
+        /// Per forzare una versione ambigua utilizzare il parametro forceVersion, 
+        /// Attualmente è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
         /// </summary>
         /// <param name="pathFileName">percorso e nome del file</param>
         /// <param name="fatturaElettronicaType">oggetto fattura</param>
+        /// <param name="forceVersion">forza ad una versione specifica. L'unico valore valido è "1.2"</param>
         /// <returns>true se l'operazione è avvenuta con success altrimenti false. Se il metodo va in errore rigetta l'errore</returns>
         /// <example>
         ///    FatturaElettronicaType fatturaElettronicaType; 
-        ///    if (!FatturaElettronica.CreateInvoice("c:\temp\IT01234567890_FPA01.xml", out FatturaElettronicaType fatturaElettronicaType))
+        ///    if (!FatturaElettronica.CreateInvoice("c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fatturaElettronicaType))
         ///    {
         ///        fatturaElettronicaType ....
         ///    }
         /// </example>
-        public static bool CreateInvoice(string pathFileName, out FatturaElettronicaType fatturaElettronicaType)
+        public static bool CreateInvoice(string pathFileName, out IFatturaElettronicaType fatturaElettronicaType, string forceVersion = null)
         {
             fatturaElettronicaType = null;
             try
@@ -196,13 +185,42 @@ namespace FatturazioneElettronica
                     throw new FileNotFoundException();
                 }
 
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(FatturaElettronicaType));
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(pathFileName);
+                string versione = xmlDoc.ChildNodes[1].Attributes[FatturaElettronicaReferences.attributoVersione].Value;
+                XmlSerializer xmlSerializer = null;
                 
+                if (string.Compare(versione, Versioni.Versione1_0, StringComparison.Ordinal) == 0)
+                {
+                    xmlSerializer = new XmlSerializer(typeof(Type.V_1_0.FatturaElettronicaType));
+                }
+                else if (string.Compare(versione, Versioni.Versione1_1, StringComparison.Ordinal) == 0)
+                {
+                    xmlSerializer = new XmlSerializer(typeof(Type.V_1_1.FatturaElettronicaType));
+                }
+                else if ((string.Compare(versione, Enum.GetName(typeof(Type.V_1_2_1.FormatoTrasmissioneType), Type.V_1_2_1.FormatoTrasmissioneType.FPA12), StringComparison.Ordinal) == 0) ||
+                    (string.Compare(versione, Enum.GetName(typeof(Type.V_1_2_1.FormatoTrasmissioneType), Type.V_1_2_1.FormatoTrasmissioneType.FPR12), StringComparison.Ordinal) == 0))
+                {
+                    if (forceVersion == Versioni.Versione1_2)
+                    {
+                        xmlSerializer = new XmlSerializer(typeof(Type.V_1_2.FatturaElettronicaType));
+                    }
+                    else
+                    {
+                        xmlSerializer = new XmlSerializer(typeof(Type.V_1_2_1.FatturaElettronicaType));
+                    }
+                }
+                else
+                {
+                    throw new System.Exception("Versione del file xml non trovata!");
+                }
+                
+
                 using (XmlReader reader = XmlReader.Create(pathFileName))
                 {
                     if (xmlSerializer.CanDeserialize(reader))
                     {
-                        fatturaElettronicaType = (FatturaElettronicaType)xmlSerializer.Deserialize(reader);
+                        fatturaElettronicaType = (IFatturaElettronicaType)xmlSerializer.Deserialize(reader);
                     }
                     else
                     {

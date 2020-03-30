@@ -10,6 +10,7 @@
     <RootNamespace>FatturazioneElettronica</RootNamespace>
     <AssemblyName>StudioAT.FatturazioneElettronica</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -48,13 +49,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FatturaElettronicaSchema.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="Type\V_1_0\FatturaElettronicaType.cs" />
+    <Compile Include="Type\V_1_0\FatturaElettronica_1_0.cs" />
+    <Compile Include="Type\V_1_1\FatturaElettronicaType.cs" />
+    <Compile Include="Type\V_1_1\FatturaElettronica_1_1.cs" />
+    <Compile Include="Type\V_1_2\FatturaElettronicaType.cs" />
+    <Compile Include="Type\V_1_2_1\FatturaElettronicaType.cs" />
+    <Compile Include="Type\V_1_2_1\FatturaElettronica_1_2_1.cs" />
+    <Compile Include="Helper\UriExtension.cs" />
+    <Compile Include="IFatturaElettronicaType.cs" />
     <Compile Include="ProgressivoFile.cs" />
-    <Compile Include="UrlCombine.cs" />
+    <Compile Include="Helper\UrlCombine.cs" />
     <Compile Include="EstensioniFile.cs" />
     <Compile Include="FatturaElettronicaReferences.cs" />
-    <Compile Include="FatturaElettronicaType.cs" />
+    <Compile Include="Type\V_1_2\FatturaElettronica_1_2.cs" />
     <Compile Include="FatturaElettronica.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Versioni.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -67,19 +80,33 @@
     <EmbeddedResource Include="Schemi\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Schemi\Schema_del_file_xml_FatturaPA_versione_1.2.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schemi\fatturapa_v1.0.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Schemi\Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schemi\Schema_del_file_xml_FatturaPA_versione_1.1.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Settings.StyleCop" />
     <None Include="_config.yml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Stili\fatturaordinaria_v1.2.1.xsl" />
-    <EmbeddedResource Include="Stili\fatturaPA_v1.2.1.xsl" />
+    <EmbeddedResource Include="Stili\FatturaOrdinaria_v1.2.xsl" />
+    <EmbeddedResource Include="Stili\FatturaPA_v1.2.xsl" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="images\References.PNG" />
+    <EmbeddedResource Include="Stili\FatturaOrdinaria_v1.2.1.xsl" />
+    <EmbeddedResource Include="Stili\FatturaPA_v1.2.1.xsl" />
+    <EmbeddedResource Include="Stili\FatturaPA_v1.0.xsl" />
+    <EmbeddedResource Include="Stili\FatturaPA_v1.1.xsl" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
