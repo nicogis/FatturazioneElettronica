@@ -319,10 +319,12 @@ public class Program
             // crea fattura da file XML
             // n.b. La versione dello schema viene automaticamente rilevata dal file. 
             // Se la versione è ambigua viene utilizzata la versione più recente dello schema
-            // Per forzare una versione ambigua utilizzare il parametro forceVersion; è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
+            // Per forzare una versione ambigua utilizzare il parametro forceVersion; 
+            // è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
 #if v12
             if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fe, Versioni.Versione1_2))
             {
+                FatturaElettronicaType fe = fa as FatturaElettronicaType;
                 string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
                 DateTime d = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Data;
                 Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
@@ -330,6 +332,7 @@ public class Program
 #else
             if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fe))
             {
+                FatturaElettronicaType fe = fa as FatturaElettronicaType;
                 string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
                 DateTime d = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Data;
                 Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
