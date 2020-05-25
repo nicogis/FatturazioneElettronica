@@ -187,7 +187,17 @@ namespace FatturazioneElettronica
 
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.Load(pathFileName);
-                string versione = xmlDoc.ChildNodes[1].Attributes[FatturaElettronicaReferences.attributoVersione].Value;
+
+                string versione = null;
+                foreach (XmlNode k in xmlDoc.ChildNodes)
+                {
+                    if ((k.NodeType == XmlNodeType.Element) && (k.Attributes?[FatturaElettronicaReferences.attributoVersione] != null))
+                    {
+                        versione = k.Attributes[FatturaElettronicaReferences.attributoVersione].Value;
+                        break;
+                    }
+                }
+
                 XmlSerializer xmlSerializer = null;
                 
                 if (string.Compare(versione, Versioni.Versione1_0, StringComparison.Ordinal) == 0)
@@ -212,7 +222,7 @@ namespace FatturazioneElettronica
                 }
                 else
                 {
-                    throw new System.Exception("Versione del file xml non trovata!");
+                    throw new Exception("Versione del file xml non trovata!");
                 }
                 
 

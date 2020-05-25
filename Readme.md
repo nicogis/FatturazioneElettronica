@@ -361,7 +361,7 @@ public class Program
 Versione 1.3 si riferisce alle specifiche tecniche del formato della fatturaPA
 
 ```
-	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.0
+	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.1
 ```
 dalla Console di Gestione Pacchetti di Visual Studio
 
