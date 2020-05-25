@@ -100,6 +100,7 @@
     <EmbeddedResource Include="Stili\FatturaPA_v1.2.xsl" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\icon.png" />
     <Content Include="images\References.PNG" />
     <EmbeddedResource Include="Stili\FatturaOrdinaria_v1.2.1.xsl" />
     <EmbeddedResource Include="Stili\FatturaPA_v1.2.1.xsl" />
