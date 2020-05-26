@@ -7,7 +7,7 @@ La libreria è completa di tutti i type per creare una fattura completa con le s
 
 Possono essere create fatture con schema 1.0, 1.1, 1.2, 1.2.1
 
-La versione 1.2.1 può essere utilizzata dal 4 maggio 2020 mentre la 1.2 può essere utilizzata fino al 30 settembre 2020
+La versione 1.2.1 può essere utilizzata dal 1 ottobre 2020 mentre la 1.2 può essere utilizzata fino al 31 dicembre 2020
 
 Sono presenti i seguenti metodi:
 

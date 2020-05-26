@@ -2,17 +2,19 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <title>Fatturazione elettronica</title>
     <authors>nicogis</authors>
     <owners>Studio A&amp;T s.r.l.</owners>
-    <licenseUrl>https://github.com/nicogis/FatturazioneElettronica/blob/master/LICENSE</licenseUrl>
+    <license type="expression">LGPL-3.0-or-later</license>
     <projectUrl>https://nicogis.github.io/FatturazioneElettronica</projectUrl>
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.2" />
+    </dependencies>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Libreria per la fatturazione elettronica</description>
-    <releaseNotes>Versione 1.3.0</releaseNotes>
+    <releaseNotes>Versione 1.3.1 - Corretto il controllo della versione della fattura</releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>FatturazioneElettronica FatturaElettronica nicogis</tags>
-    <icon>images\icon.png</icon>
   </metadata>
 </package>

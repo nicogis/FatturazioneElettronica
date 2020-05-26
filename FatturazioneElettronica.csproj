@@ -32,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -94,13 +95,13 @@
     </EmbeddedResource>
     <None Include="Settings.StyleCop" />
     <None Include="_config.yml" />
+    <None Include="images\icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Stili\FatturaOrdinaria_v1.2.xsl" />
     <EmbeddedResource Include="Stili\FatturaPA_v1.2.xsl" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\icon.png" />
     <Content Include="images\References.PNG" />
     <EmbeddedResource Include="Stili\FatturaOrdinaria_v1.2.1.xsl" />
     <EmbeddedResource Include="Stili\FatturaPA_v1.2.1.xsl" />
