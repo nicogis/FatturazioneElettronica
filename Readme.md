@@ -322,7 +322,7 @@ public class Program
             // Per forzare una versione ambigua utilizzare il parametro forceVersion; 
             // è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
 #if v12
-            if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fe, Versioni.Versione1_2))
+            if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fa, Versioni.Versione1_2))
             {
                 FatturaElettronicaType fe = fa as FatturaElettronicaType;
                 string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
@@ -330,7 +330,7 @@ public class Program
                 Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
             }
 #else
-            if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fe))
+            if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fa))
             {
                 FatturaElettronicaType fe = fa as FatturaElettronicaType;
                 string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
