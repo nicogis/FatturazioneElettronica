@@ -358,8 +358,6 @@ public class Program
 ```
 ### Installazione
 
-Versione [1.3.1](https://www.fatturapa.gov.it/export/fatturazione/sdi/Specifiche_tecniche_del_formato_FatturaPA_V1.3.1.pdf) si riferisce alle specifiche tecniche del formato della fatturaPA
-
 ```
 	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.1
 ```
