@@ -3,7 +3,7 @@
 ### Descrizione
 La libreria è stata sviluppata in c# in base alla documentazione fornita al seguente link [Documentazione Fattura PA](http://www.fatturapa.gov.it/export/fatturazione/it/normativa/f-2.htm)
 
-La libreria è completa di tutti i type per creare una fattura completa con le specifiche [v. 1.3](https://www.fatturapa.gov.it/export/fatturazione/sdi/Specifiche_tecniche_del_formato_FatturaPA_V1.3.pdf)  in base alle proprie esigenze
+La libreria è completa di tutti i type per creare una fattura completa con le specifiche [v. 1.3.1](https://www.fatturapa.gov.it/export/fatturazione/sdi/Specifiche_tecniche_del_formato_FatturaPA_V1.3.1.pdf)  in base alle proprie esigenze
 
 Possono essere create fatture con schema 1.0, 1.1, 1.2, 1.2.1
 
@@ -358,7 +358,7 @@ public class Program
 ```
 ### Installazione
 
-Versione 1.3 si riferisce alle specifiche tecniche del formato della fatturaPA
+Versione [v. 1.3.1](https://www.fatturapa.gov.it/export/fatturazione/sdi/Specifiche_tecniche_del_formato_FatturaPA_V1.3.1.pdf) si riferisce alle specifiche tecniche del formato della fatturaPA
 
 ```
 	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.1
