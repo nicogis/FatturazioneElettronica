@@ -11,7 +11,7 @@ La versione 1.2.1 può essere utilizzata dal 1 ottobre 2020 mentre la 1.2 può e
 
 Sono presenti i seguenti metodi:
 
-- *TryValidateXML* per validare la fattura
+- *TryValidateXML* per validare la fattura tramite lo schema xsd
 
 - *CreateXML* per generale il file XML
 
