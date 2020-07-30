@@ -1,9 +1,9 @@
 ﻿## Fatturazione elettronica verso la Pubblica Amministrazione e privati
 
 ### Descrizione
-La libreria è stata sviluppata in c# in base alla documentazione fornita al seguente link [Documentazione Fattura PA](http://www.fatturapa.gov.it/export/fatturazione/it/normativa/f-2.htm)
+La libreria è stata sviluppata in c# in base alla documentazione fornita al seguente link [Documentazione Fattura PA](https://www.fatturapa.gov.it/it/norme-e-regole/documentazione-fatturapa/)
 
-La libreria è completa di tutti i type per creare una fattura completa con le specifiche [v. 1.3.1](https://www.fatturapa.gov.it/export/fatturazione/sdi/Specifiche_tecniche_del_formato_FatturaPA_V1.3.1.pdf)  in base alle proprie esigenze
+La libreria è completa di tutti i type per creare una fattura completa con le specifiche [v. 1.3.1](https://www.fatturapa.gov.it/export/documenti/Specifiche_tecniche_del_formato_FatturaPA_V1.3.1.pdf)  in base alle proprie esigenze
 
 Possono essere create fatture con schema 1.0, 1.1, 1.2, 1.2.1
 
@@ -26,6 +26,12 @@ Sono presenti i seguenti metodi:
                 string nomeFile = $"IT01234567890_{progressivoFile.GetProgressivoFile()}";
             }  
 ```
+### Librerie facoltative di supporto
+
+- *Utilities per la fatturazione elettronica* al [seguente link](https://github.com/nicogis/FatturazioneElettronica-Extensions)
+- *Client per web services Indice delle Pubbliche Amministrazioni* al [seguente link](https://github.com/nicogis/FatturazioneElettronica-IPA)
+
+
 ### Requisiti
 
 E' richiesto il framework Microsoft .NET 4.6.2
