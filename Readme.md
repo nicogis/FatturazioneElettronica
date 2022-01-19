@@ -9,9 +9,11 @@ Possono essere create fatture con schema 1.0, 1.1, 1.2, 1.2.1
 
 La versione 1.2.1 può essere utilizzata dal 1 ottobre 2020 mentre la 1.2 può essere utilizzata fino al 31 dicembre 2020
 
+La libreria non ha un metodo per la convalida della fattura
+
 Sono presenti i seguenti metodi:
 
-- *TryValidateXML* per validare la fattura tramite lo schema xsd
+- *TryValidateXML* per validare la fattura con lo schema xsd
 
 - *CreateXML* per generale il file XML
 
@@ -27,7 +29,7 @@ Sono presenti i seguenti metodi:
             }  
 ```
 ### Librerie facoltative di supporto
-
+- *Fatturazione elettronica semplificata* al [seguente link](https://github.com/nicogis/FatturazioneElettronicaSemplificata)
 - *Utilities per la fatturazione elettronica* al [seguente link](https://github.com/nicogis/FatturazioneElettronica-Extensions)
 - *Client per web services Indice delle Pubbliche Amministrazioni* al [seguente link](https://github.com/nicogis/FatturazioneElettronica-IPA)
 
