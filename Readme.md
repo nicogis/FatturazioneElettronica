@@ -15,7 +15,7 @@ Sono presenti i seguenti metodi:
 
 - *TryValidateXML* per validare la fattura con lo schema xsd
 
-- *CreateXML* per generale il file XML
+- *CreateXML* per generare il file XML
 
 - *CreateInvoice* per generare l'oggetto fattura da file XML 
 
