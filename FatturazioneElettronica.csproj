@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exception\VersionNotFoundException.cs" />
     <Compile Include="FatturaElettronicaSchema.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Type\V_1_0\FatturaElettronicaType.cs" />

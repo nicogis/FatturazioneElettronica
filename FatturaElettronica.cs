@@ -4,10 +4,9 @@
 // </copyright>
 // <author>Nicogis</author>
 //-----------------------------------------------------------------------
-using System;
-
 namespace FatturazioneElettronica
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
@@ -21,7 +20,6 @@ namespace FatturazioneElettronica
     /// </summary>
     public static class FatturaElettronica
     {
-
         /// <summary>
         /// crea il file XML della fattura
         /// </summary>
@@ -157,27 +155,14 @@ namespace FatturazioneElettronica
             }
         }
 
+        
         /// <summary>
-        /// Crea oggetto fattura da file
-        /// La versione dello schema viene automaticamente rilevata dal file. 
-        /// Se la versione è ambigua viene utilizzata la versione più recente dello schema
-        /// Per forzare una versione ambigua utilizzare il parametro forceVersion, 
-        /// Attualmente è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
+        /// Restituisce l'attributo versione dell'xml
         /// </summary>
-        /// <param name="pathFileName">percorso e nome del file</param>
-        /// <param name="fatturaElettronicaType">oggetto fattura</param>
-        /// <param name="forceVersion">forza ad una versione specifica. L'unico valore valido è "1.2"</param>
-        /// <returns>true se l'operazione è avvenuta con success altrimenti false. Se il metodo va in errore rigetta l'errore</returns>
-        /// <example>
-        ///    FatturaElettronicaType fatturaElettronicaType; 
-        ///    if (!FatturaElettronica.CreateInvoice("c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fatturaElettronicaType))
-        ///    {
-        ///        fatturaElettronicaType ....
-        ///    }
-        /// </example>
-        public static bool CreateInvoice(string pathFileName, out IFatturaElettronicaType fatturaElettronicaType, string forceVersion = null)
+        /// <param name="pathFileName">percorso e nome del file xml</param>
+        /// <returns>Attributo versione dell'xml. Se il metodo va in errore rigetta l'errore</returns>
+        public static string GetVersion(string pathFileName)
         {
-            fatturaElettronicaType = null;
             try
             {
                 if (!File.Exists(pathFileName))
@@ -185,8 +170,29 @@ namespace FatturazioneElettronica
                     throw new FileNotFoundException();
                 }
 
+                using (FileStream f = File.OpenRead(pathFileName))
+                {
+                    return FatturaElettronica.GetVersion(f);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restituisce l'attributo versione dell'xml
+        /// </summary>
+        /// <param name="xml">stream fattura xml</param>
+        /// <returns>Attributo versione dell'xml. Se il metodo va in errore rigetta l'errore</returns>
+        public static string GetVersion(Stream xml)
+        {
+            try
+            {
+                
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(pathFileName);
+                xmlDoc.Load(xml);
 
                 string versione = null;
                 foreach (XmlNode k in xmlDoc.ChildNodes)
@@ -198,8 +204,81 @@ namespace FatturazioneElettronica
                     }
                 }
 
-                XmlSerializer xmlSerializer = null;
+                return versione;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Crea oggetto fattura da file
+        /// La versione dello schema viene automaticamente rilevata dal file. 
+        /// Se la versione è ambigua viene utilizzata la versione più recente dello schema
+        /// Per forzare una versione ambigua utilizzare il parametro forceVersion, 
+        /// Attualmente è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
+        /// </summary>
+        /// <param name="pathFileName">percorso e nome del file</param>
+        /// <param name="fatturaElettronicaType">oggetto fattura</param>
+        /// <param name="forceVersion">forza ad una versione specifica. L'unico valore valido è "1.2"</param>
+        /// <returns>true se l'operazione è avvenuta con successo altrimenti false. Se il metodo va in errore rigetta l'errore</returns>
+        /// <example>
+        ///    FatturaElettronicaType fatturaElettronicaType; 
+        ///    if (!FatturaElettronica.CreateInvoice("c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fatturaElettronicaType))
+        ///    {
+        ///        fatturaElettronicaType ....
+        ///    }
+        /// </example>
+        public static bool CreateInvoice(string pathFileName, out IFatturaElettronicaType fatturaElettronicaType, string forceVersion = null)
+        {
+            try
+            {
+                if (!File.Exists(pathFileName))
+                {
+                    throw new FileNotFoundException();
+                }
+
+                using (FileStream f = File.OpenRead(pathFileName))
+                {
+                    return FatturaElettronica.CreateInvoice(f, out fatturaElettronicaType, forceVersion);
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Crea oggetto fattura da file
+        /// La versione dello schema viene automaticamente rilevata dal file. 
+        /// Se la versione è ambigua viene utilizzata la versione più recente dello schema
+        /// Per forzare una versione ambigua utilizzare il parametro forceVersion, 
+        /// Attualmente è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
+        /// </summary>
+        /// <param name="xml">stream fattura xml</param>
+        /// <param name="fatturaElettronicaType">oggetto fattura</param>
+        /// <param name="forceVersion">forza ad una versione specifica. L'unico valore valido è "1.2"</param>
+        /// <returns>true se l'operazione è avvenuta con successo altrimenti false. Se il metodo va in errore rigetta l'errore</returns>
+        /// <example>
+        ///    FatturaElettronicaType fatturaElettronicaType; 
+        ///    if (!FatturaElettronica.CreateInvoice("c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fatturaElettronicaType))
+        ///    {
+        ///        fatturaElettronicaType ....
+        ///    }
+        /// </example>
+        public static bool CreateInvoice(Stream xml, out IFatturaElettronicaType fatturaElettronicaType, string forceVersion = null)
+        {
+            fatturaElettronicaType = null;
+            try
+            {
                 
+                string versione = GetVersion(xml);
+
+                XmlSerializer xmlSerializer = null;
+
                 if (string.Compare(versione, Versioni.Versione1_0, StringComparison.Ordinal) == 0)
                 {
                     xmlSerializer = new XmlSerializer(typeof(Type.V_1_0.FatturaElettronicaType));
@@ -222,11 +301,11 @@ namespace FatturazioneElettronica
                 }
                 else
                 {
-                    throw new Exception("Versione del file xml non trovata!");
+                    throw new VersionNotFoundException("Versione del file xml non trovata!", versione);
                 }
-                
 
-                using (XmlReader reader = XmlReader.Create(pathFileName))
+                xml.Position = 0;
+                using (XmlReader reader = XmlReader.Create(xml))
                 {
                     if (xmlSerializer.CanDeserialize(reader))
                     {

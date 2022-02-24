@@ -15,7 +15,7 @@ Sono presenti i seguenti metodi:
 
 - *CreateXML* per generale il file XML
 
-- *CreateInvoice* per generare l'oggetto fattura da file XML 
+- *CreateInvoice* per generare l'oggetto fattura da file XML o stream
 
 - *GetProgressivoFile*
 ```csharp
@@ -26,6 +26,8 @@ Sono presenti i seguenti metodi:
                 string nomeFile = $"IT01234567890_{progressivoFile.GetProgressivoFile()}";
             }  
 ```
+- *GetVersion* per restituire l'attributo versione dell'xml da file o stream
+
 ### Requisiti
 
 E' richiesto il framework Microsoft .NET 4.6.2
@@ -330,6 +332,7 @@ public class Program
                 Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
             }
 #else
+            // carica da file
             if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fa))
             {
                 FatturaElettronicaType fe = fa as FatturaElettronicaType;
@@ -337,6 +340,22 @@ public class Program
                 DateTime d = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Data;
                 Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
             }
+
+            // carica da stream
+            using (FileStream f = File.OpenRead(@"c:\temp\6006173547.xml"))
+            {
+                string versione = FatturaElettronica.GetVersion(f); //attributo versione xml
+                f.Position = 0;
+                if (FatturaElettronica.CreateInvoice(f, out IFatturaElettronicaType fa))
+                {
+                    FatturaElettronicaType fe = fa as FatturaElettronicaType;
+
+                    string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
+                    DateTime d = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Data;
+                    Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
+                }
+            }
+            
 #endif
 
             // generazione di numero univoco progressivo file
@@ -361,7 +380,7 @@ public class Program
 Versione 1.3 si riferisce alle specifiche tecniche del formato della fatturaPA
 
 ```
-	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.1
+	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.2
 ```
 dalla Console di Gestione Pacchetti di Visual Studio
 
