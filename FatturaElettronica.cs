@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------
 namespace FatturazioneElettronica
 {
-    using FatturazioneElettronica.Helper;
+    using Helper;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -375,7 +375,7 @@ namespace FatturazioneElettronica
                     xml = textWriter.ToString();
                 }
 
-                File.WriteAllText(pathFileName, Helper.Helper.TransformXMLToHTML(xml, xsl));
+                File.WriteAllText(pathFileName, Utility.TransformXMLToHTML(xml, xsl));
 
                 return true;
             }

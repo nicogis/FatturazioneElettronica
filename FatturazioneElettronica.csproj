@@ -54,7 +54,7 @@
     <Compile Include="FatturaElettronicaSchema.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Helper\Utf8StringWriter.cs" />
-    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Helper\Utility.cs" />
     <Compile Include="Type\V_1_0\FatturaElettronicaType.cs" />
     <Compile Include="Type\V_1_0\FatturaElettronica_1_0.cs" />
     <Compile Include="Type\V_1_1\FatturaElettronicaType.cs" />

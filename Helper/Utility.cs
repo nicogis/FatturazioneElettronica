@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Helper.cs" company="Studio A&T s.r.l.">
+// <copyright file="Utility.cs" company="Studio A&T s.r.l.">
 //     Author: nicogis
 //     Copyright (c) Studio A&T s.r.l. All rights reserved.
 // </copyright>
@@ -10,7 +10,7 @@ namespace FatturazioneElettronica.Helper
 	using System.Xml;
 	using System.Xml.Xsl;
 
-	internal static class Helper
+	internal static class Utility
     {
 		public static string TransformXMLToHTML(string inputXml, string xsltString)
 		{
