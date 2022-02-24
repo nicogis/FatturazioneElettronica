@@ -324,5 +324,65 @@ namespace FatturazioneElettronica
                 throw;
             }
         }
+
+        /// <summary>
+        /// Crea file html della fattura.
+        /// Se lo stile non è indicato viene utilizzato quello di default.
+        /// Questo metodo è utile per visualizzare un'anteprima su browser che hanno restrizioni nella visualizzazione diretta di xml con applicato uno stile in locale
+        /// </summary>
+        /// <param name="fatturaElettronicaType">oggetto fattura</param>
+        /// <param name="pathFileName">percorso e nome file di output</param>
+        /// <param name="pathFileNameStile">percorso e nome file stile da applicare</param>
+        /// <returns>true se la creazione è andata a buon termine altrimenti rigetta l'errore</returns>
+        /// <example>
+        ///    fatturaElettronicaType.CreateHTML("c:\temp\IT01234567890_FPA01.html");
+        ///    
+        ///    // generazione file html per la visualizzazione con stile personalizzato
+        ///    fatturaElettronicaType.CreateHTML("c:\temp\preview.xml", "c:\temp\stilepersonalizzato.xsl");
+        /// </example>
+        public static bool CreateHTML(this IFatturaElettronicaType fatturaElettronicaType, string pathFileName, string pathFileNameStile = null)
+        {
+            try
+            {
+                XmlSerializerNamespaces xmlSerializerNamespaces = new XmlSerializerNamespaces();
+
+                xmlSerializerNamespaces.Add(FatturaElettronicaReferences.prefixSchema, FatturaElettronicaReferences.XsiNamespace);
+                xmlSerializerNamespaces.Add(FatturaElettronicaReferences.prefixNamespace, fatturaElettronicaType.Namespace);
+                xmlSerializerNamespaces.Add(FatturaElettronicaReferences.prefixDigitalSignatures, fatturaElettronicaType.DsNamespace);
+
+                XmlSerializer xmlSerializer = new XmlSerializer(fatturaElettronicaType.GetType());
+                string xml = null;
+                string xsl = null;
+                if (pathFileName == null)
+                {
+                    using (TextWriter textWriter = new StringWriter())
+                    {
+                        xmlSerializer.Serialize(textWriter, fatturaElettronicaType, xmlSerializerNamespaces);
+                        xml = textWriter.ToString();
+                    }
+                }
+                else
+                {
+                    xsl = File.ReadAllText(pathFileNameStile);
+                }
+
+                string styleFile = fatturaElettronicaType.FileStyle;
+
+                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{typeof(FatturaElettronica).Namespace}.{styleFile}"))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    xsl = reader.ReadToEnd();
+                }
+
+                File.WriteAllText(pathFileName, Helper.Helper.TransformXMLToHTML(xml, xsl));
+
+                return true;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }

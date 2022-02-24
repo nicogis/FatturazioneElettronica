@@ -15,11 +15,14 @@ Sono presenti i seguenti metodi:
 
 - *TryValidateXML* per validare la fattura con lo schema xsd
 
+- *CreateHTML* per generare il file HTML con stile di default o personalizzato
+
 - *CreateXML* per generare il file XML
 
 - *CreateInvoice* per generare l'oggetto fattura da file XML o stream
 
 - *GetProgressivoFile*
+
 ```csharp
             // codifica in base36 per 5 caratteri (range 1..60466176 (ProgressivoFile.GetNumeroProgressivo("ZZZZZ")))
             ProgressivoFile progressivoFile = new ProgressivoFile(1);
@@ -28,6 +31,9 @@ Sono presenti i seguenti metodi:
                 string nomeFile = $"IT01234567890_{progressivoFile.GetProgressivoFile()}";
             }  
 ```
+
+- *GetVersion* per restituire l'attributo versione dell'xml da file o stream
+
 ### Librerie facoltative di supporto
 - *Fatturazione elettronica semplificata* al [seguente link](https://github.com/nicogis/FatturazioneElettronicaSemplificata)
 - *Utilities per la fatturazione elettronica* al [seguente link](https://github.com/nicogis/FatturazioneElettronica-Extensions)
@@ -319,9 +325,13 @@ public class Program
                 // crea XML fattura
                 fatturaElettronica.CreateXML(@"c:\temp\IT01234567890_FPA01.xml");
 
-                // crea XML fattura temporanea per visualizzarla con lo stile
+                // crea XML fattura temporanea per visualizzarla con lo stile di default
                 fatturaElettronica.CreateXML(@"c:\temp\preview.xml", true);
                 System.Diagnostics.Process.Start(@"c:\temp\preview.xml");
+
+                // crea HTML fattura temporanea per visualizzarla con lo stile di default
+                fatturaElettronica.CreateHTML(@"c:\temp\IT01234567890_FPA01.html");
+                fatturaElettronica.CreateHTML(@"c:\temp\IT01234567890_FPA01.html", @"c:\temp\stilePersonalizzato.xls");
             }
             
             // crea fattura da file XML
