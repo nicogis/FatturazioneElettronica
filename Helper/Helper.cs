@@ -19,7 +19,8 @@ namespace FatturazioneElettronica.Helper
 			{
 				transform.Load(reader);
 			}
-			StringWriter results = new StringWriter();
+
+			Utf8StringWriter results = new Utf8StringWriter();
 			using (XmlReader reader = XmlReader.Create(new StringReader(inputXml)))
 			{
 				transform.Transform(reader, null, results);

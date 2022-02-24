@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 namespace FatturazioneElettronica
 {
+    using FatturazioneElettronica.Helper;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -353,12 +354,14 @@ namespace FatturazioneElettronica
                 XmlSerializer xmlSerializer = new XmlSerializer(fatturaElettronicaType.GetType());
                 string xml = null;
                 string xsl = null;
-                if (pathFileName == null)
+                if (pathFileNameStile == null)
                 {
-                    using (TextWriter textWriter = new StringWriter())
+                    string styleFile = fatturaElettronicaType.FileStyle;
+
+                    using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{typeof(FatturaElettronica).Namespace}.{styleFile}"))
+                    using (StreamReader reader = new StreamReader(stream))
                     {
-                        xmlSerializer.Serialize(textWriter, fatturaElettronicaType, xmlSerializerNamespaces);
-                        xml = textWriter.ToString();
+                        xsl = reader.ReadToEnd();
                     }
                 }
                 else
@@ -366,12 +369,10 @@ namespace FatturazioneElettronica
                     xsl = File.ReadAllText(pathFileNameStile);
                 }
 
-                string styleFile = fatturaElettronicaType.FileStyle;
-
-                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{typeof(FatturaElettronica).Namespace}.{styleFile}"))
-                using (StreamReader reader = new StreamReader(stream))
+                using (TextWriter textWriter = new Utf8StringWriter())
                 {
-                    xsl = reader.ReadToEnd();
+                    xmlSerializer.Serialize(textWriter, fatturaElettronicaType, xmlSerializerNamespaces);
+                    xml = textWriter.ToString();
                 }
 
                 File.WriteAllText(pathFileName, Helper.Helper.TransformXMLToHTML(xml, xsl));
