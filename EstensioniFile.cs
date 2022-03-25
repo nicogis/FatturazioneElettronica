@@ -29,7 +29,12 @@ namespace FatturazioneElettronica
         /// <summary>
         /// file schema xml
         /// </summary>
-        xsd
+        xsd,
+
+        /// <summary>
+        /// file formato anteprima fattura
+        /// </summary>
+        html
 
     }
 }
