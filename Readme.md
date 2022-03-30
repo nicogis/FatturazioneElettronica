@@ -394,7 +394,7 @@ public class Program
 ### Installazione
 
 ```
-	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.1
+	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.2
 ```
 dalla Console di Gestione Pacchetti di Visual Studio
 
