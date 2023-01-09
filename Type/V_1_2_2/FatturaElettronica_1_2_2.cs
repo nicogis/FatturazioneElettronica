@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FatturaElettronica_1_2_1.cs" company="Studio A&T s.r.l.">
+// <copyright file="FatturaElettronica_1_2_2.cs" company="Studio A&T s.r.l.">
 //     Author: nicogis
 //     Copyright (c) Studio A&T s.r.l. All rights reserved.
 // </copyright>
