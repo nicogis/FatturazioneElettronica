@@ -28,6 +28,11 @@ namespace FatturazioneElettronica
         /// Versione 1.2.1
         /// </summary>
         public const string Versione1_2_1 = "1.2.1";
+
+        /// <summary>
+        /// Versione 1.2.2
+        /// </summary>
+        public const string Versione1_2_2 = "1.2.2";
     }
 }
 

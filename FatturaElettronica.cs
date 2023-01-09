@@ -257,11 +257,11 @@ namespace FatturazioneElettronica
         /// La versione dello schema viene automaticamente rilevata dal file. 
         /// Se la versione è ambigua viene utilizzata la versione più recente dello schema
         /// Per forzare una versione ambigua utilizzare il parametro forceVersion, 
-        /// Attualmente è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
+        /// Attualmente sono validi solo i valore '1.2' e '1.2.1' visto la retrocompatibile della versione 1.2.2
         /// </summary>
         /// <param name="xml">stream fattura xml</param>
         /// <param name="fatturaElettronicaType">oggetto fattura</param>
-        /// <param name="forceVersion">forza ad una versione specifica. L'unico valore valido è "1.2"</param>
+        /// <param name="forceVersion">forza ad una versione specifica. Gli unici valori validi sono : "1.2" o "1.2.1"</param>
         /// <returns>true se l'operazione è avvenuta con successo altrimenti false. Se il metodo va in errore rigetta l'errore</returns>
         /// <example>
         ///    FatturaElettronicaType fatturaElettronicaType; 
@@ -275,7 +275,7 @@ namespace FatturazioneElettronica
             fatturaElettronicaType = null;
             try
             {
-                
+
                 string versione = GetVersion(xml);
 
                 XmlSerializer xmlSerializer = null;
@@ -288,16 +288,25 @@ namespace FatturazioneElettronica
                 {
                     xmlSerializer = new XmlSerializer(typeof(Type.V_1_1.FatturaElettronicaType));
                 }
-                else if ((string.Compare(versione, Enum.GetName(typeof(Type.V_1_2_1.FormatoTrasmissioneType), Type.V_1_2_1.FormatoTrasmissioneType.FPA12), StringComparison.Ordinal) == 0) ||
-                    (string.Compare(versione, Enum.GetName(typeof(Type.V_1_2_1.FormatoTrasmissioneType), Type.V_1_2_1.FormatoTrasmissioneType.FPR12), StringComparison.Ordinal) == 0))
+                else if ((string.Compare(versione, Enum.GetName(typeof(Type.V_1_2.FormatoTrasmissioneType), Type.V_1_2.FormatoTrasmissioneType.FPA12), StringComparison.Ordinal) == 0) ||
+                         (string.Compare(versione, Enum.GetName(typeof(Type.V_1_2.FormatoTrasmissioneType), Type.V_1_2.FormatoTrasmissioneType.FPR12), StringComparison.Ordinal) == 0) ||
+                         (string.Compare(versione, Enum.GetName(typeof(Type.V_1_2_1.FormatoTrasmissioneType), Type.V_1_2_1.FormatoTrasmissioneType.FPA12), StringComparison.Ordinal) == 0) ||
+                         (string.Compare(versione, Enum.GetName(typeof(Type.V_1_2_1.FormatoTrasmissioneType), Type.V_1_2_1.FormatoTrasmissioneType.FPR12), StringComparison.Ordinal) == 0) ||
+                         (string.Compare(versione, Enum.GetName(typeof(Type.V_1_2_2.FormatoTrasmissioneType), Type.V_1_2_2.FormatoTrasmissioneType.FPA12), StringComparison.Ordinal) == 0) ||
+                         (string.Compare(versione, Enum.GetName(typeof(Type.V_1_2_2.FormatoTrasmissioneType), Type.V_1_2_2.FormatoTrasmissioneType.FPR12), StringComparison.Ordinal) == 0))
                 {
+
                     if (forceVersion == Versioni.Versione1_2)
                     {
                         xmlSerializer = new XmlSerializer(typeof(Type.V_1_2.FatturaElettronicaType));
                     }
-                    else
+                    else if (forceVersion == Versioni.Versione1_2_1)
                     {
                         xmlSerializer = new XmlSerializer(typeof(Type.V_1_2_1.FatturaElettronicaType));
+                    }
+                    else
+                    {
+                        xmlSerializer = new XmlSerializer(typeof(Type.V_1_2_2.FatturaElettronicaType));
                     }
                 }
                 else

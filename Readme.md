@@ -3,11 +3,11 @@
 ### Descrizione
 La libreria è stata sviluppata in c# in base alla documentazione fornita al seguente link [Documentazione Fattura PA](https://www.fatturapa.gov.it/it/norme-e-regole/documentazione-fatturapa/)
 
-La libreria è completa di tutti i type per creare una fattura completa con le specifiche [v. 1.3.1](https://www.fatturapa.gov.it/export/documenti/Specifiche_tecniche_del_formato_FatturaPA_V1.3.1.pdf)  in base alle proprie esigenze
+La libreria è completa di tutti i type per creare una fattura completa con le specifiche [v. 1.3.2](https://www.fatturapa.gov.it/export/documenti/Specifiche_tecniche_del_formato_FatturaPA_V1.3.2.pdf)  in base alle proprie esigenze
 
-Possono essere create fatture con schema 1.0, 1.1, 1.2, 1.2.1
+Possono essere create fatture con schema 1.0, 1.1, 1.2, 1.2.1, 1.2.2
 
-La versione 1.2.1 può essere utilizzata dal 1 ottobre 2020 mentre la 1.2 può essere utilizzata fino al 31 dicembre 2020
+La documentazione della versione 1.2.2 è valida dal 1 ottobre 2022 mentre la documentazione 1.2.1 è valida fino al 1 ottobre 2022
 
 La libreria non ha un metodo per la convalida della fattura
 
@@ -50,7 +50,7 @@ E' richiesto il framework Microsoft .NET 4.6.2
 
 ```csharp
 
-#define v121
+#define v122
 #define allegati
 
 //-----------------------------------------------------------------------
@@ -68,6 +68,8 @@ using FatturazioneElettronica.Type.V_1_1;
 using FatturazioneElettronica.Type.V_1_2;
 #elif v121
 using FatturazioneElettronica.Type.V_1_2_1;
+#elif v122
+using FatturazioneElettronica.Type.V_1_2_2;
 #endif
 
 using System;
@@ -84,7 +86,7 @@ public class Program
         fatturaElettronica.versione = VersioneSchemaType.Item10;
 #elif v11
         fatturaElettronica.versione = VersioneSchemaType.Item11;
-#elif v12 || v121
+#elif v12 || v121 || v122
         fatturaElettronica.versione = FormatoTrasmissioneType.FPR12;
 #endif
 
@@ -103,7 +105,7 @@ public class Program
         datiTrasmissioneType.FormatoTrasmissione = FormatoTrasmissioneType.SDI10;
 #elif v11
         datiTrasmissioneType.FormatoTrasmissione = FormatoTrasmissioneType.SDI11;
-#elif v12 || v121
+#elif v12 || v121 || v122
         datiTrasmissioneType.FormatoTrasmissione = FormatoTrasmissioneType.FPR12;
 #endif
 
@@ -125,7 +127,12 @@ public class Program
 
         
         anagraficaType.Items = new string[] { "ALPHA SRL" };
+        
+#if v122
+        anagraficaType.ItemsElementName = new ItemsChoiceType3[] { ItemsChoiceType3.Denominazione };
+#else
         anagraficaType.ItemsElementName = new ItemsChoiceType[] { ItemsChoiceType.Denominazione };
+#endif
         
         datiAnagraficiCedenteType.Anagrafica = anagraficaType;
 
@@ -234,7 +241,15 @@ public class Program
         datiAnagraficiVettore.IdFiscaleIVA = idFiscaleType;
         AnagraficaType anagraficaTypeDT = new AnagraficaType();
         anagraficaTypeDT.Items = new string[] { "Trasporto spa" };
-        anagraficaTypeDT.ItemsElementName = new ItemsChoiceType[] { ItemsChoiceType.Denominazione };
+
+        
+        
+#if v122
+        anagraficaTypeDT.ItemsElementName = new ItemsChoiceType3[] { ItemsChoiceType3.Denominazione };
+#else
+        anagraficaTypeDT.ItemsElementName = new ItemsChoiceType[] { ItemsChoiceType.Denominazione};
+#endif
+        
         datiAnagraficiVettore.Anagrafica = anagraficaTypeDT;
         datiTrasportoType.DatiAnagraficiVettore = datiAnagraficiVettore;
         datiTrasportoType.DataOraConsegnaSpecified = true;
@@ -338,9 +353,17 @@ public class Program
             // n.b. La versione dello schema viene automaticamente rilevata dal file. 
             // Se la versione è ambigua viene utilizzata la versione più recente dello schema
             // Per forzare una versione ambigua utilizzare il parametro forceVersion; 
-            // è valido solo il valore '1.2' visto che la 1.2.1 è retrocompatibile con la 1.2
+            // sono validi solo i valori '1.2' e '1.2.1' visto che la 1.2.2 è retrocompatibile
 #if v12
             if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fa, Versioni.Versione1_2))
+            {
+                FatturaElettronicaType fe = fa as FatturaElettronicaType;
+                string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
+                DateTime d = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Data;
+                Console.WriteLine($"Numero fattura: {n} - Data fattura: {d.ToLongDateString()}");
+            }
+#elif v121
+            if (FatturaElettronica.CreateInvoice(@"c:\temp\IT01234567890_FPA01.xml", out IFatturaElettronicaType fa, Versioni.Versione1_2_1))
             {
                 FatturaElettronicaType fe = fa as FatturaElettronicaType;
                 string n = fe.FatturaElettronicaBody[0].DatiGenerali.DatiGeneraliDocumento.Numero;
@@ -394,15 +417,10 @@ public class Program
 ### Installazione
 
 ```
-	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.2
+	PM> Install-Package StudioAT.FatturazioneElettronica -Version 1.3.2.1
 ```
 dalla Console di Gestione Pacchetti di Visual Studio
 
 ### License
 
 Il progetto è rilasciato sotto licenza GNU Library General Public License (LGPL).
-
-
-
-
-

@@ -71,6 +71,8 @@
     <Compile Include="Type\V_1_2\FatturaElettronica_1_2.cs" />
     <Compile Include="FatturaElettronica.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Type\V_1_2_2\FatturaElettronicaType.cs" />
+    <Compile Include="Type\V_1_2_2\FatturaElettronica_1_2_2.cs" />
     <Compile Include="Versioni.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +98,9 @@
     <EmbeddedResource Include="Schemi\Schema_del_file_xml_FatturaPA_versione_1.1.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Schemi\Schema_del_file_xml_FatturaPA_versione_1.2.2.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Settings.StyleCop" />
     <None Include="_config.yml" />
     <None Include="images\icon.png" Pack="true" PackagePath="" />
@@ -106,6 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="images\References.PNG" />
+    <EmbeddedResource Include="Stili\FatturaPA_v1.2.2.xsl" />
+    <EmbeddedResource Include="Stili\FatturaOrdinaria_v1.2.2.xsl" />
     <EmbeddedResource Include="Stili\FatturaOrdinaria_v1.2.1.xsl" />
     <EmbeddedResource Include="Stili\FatturaPA_v1.2.1.xsl" />
     <EmbeddedResource Include="Stili\FatturaPA_v1.0.xsl" />
