@@ -11,7 +11,7 @@ namespace FatturazioneElettronica.Type.V_1_2_2
         
         public FatturaElettronicaType()
         {
-            base.Init("1.2.2", "1.3");  
+            base.Init("1.2.2", "1.3.2");  
         }
 
         public override string FileStyle
