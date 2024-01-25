@@ -1,7 +1,7 @@
 ﻿## Fatturazione elettronica verso la Pubblica Amministrazione e privati
 
 ### Descrizione
-La libreria è stata sviluppata in c# in base alla documentazione fornita al seguente link [Documentazione Fattura PA](https://www.fatturapa.gov.it/it/norme-e-regole/documentazione-fatturapa/)
+La libreria è stata sviluppata in c# in base alla documentazione fornita al seguente link [Documentazione Fattura PA](https://www.fatturapa.gov.it/it/norme-e-regole/documentazione-fattura-elettronica/formato-fatturapa/)
 
 La libreria è completa di tutti i type per creare una fattura completa con le specifiche [v. 1.3.2](https://www.fatturapa.gov.it/export/documenti/Specifiche_tecniche_del_formato_FatturaPA_V1.3.2.pdf)  in base alle proprie esigenze
 
